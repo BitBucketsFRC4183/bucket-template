@@ -69,6 +69,8 @@ public class TalonSwerveModule implements ISwerveModule {
 
     public static TalonSwerveModule acquire(TalonFX drive, TalonFX turn, CANCoder encoder, Rotation2d offset) {
 
+
+
         TalonFXConfiguration driveConfig = new TalonFXConfiguration();
 
         driveConfig.voltageCompSaturation = 12.0;

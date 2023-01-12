@@ -1,5 +1,7 @@
 rootProject.name = 'season-template'
-include 'bucket-bootstrap'
+include 'bucket-bootstrap' //YOU CANNOT MOVE THIS. IT HAS TO COME FIRST. To future perfectionists like me, i'm sorry for introducing this shitcode.
+//has to come first to load vendordep / other dependencies to the main project's children WITHOUT installing the gradle plugin on all of them.
+//in the future we are not doing multiple modules because WPILib sucks and makes it impossible to do so flexibly.
 include 'bucket-lib'
 include 'bucket-drive'
 include 'bucket-shared'
