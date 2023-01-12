@@ -1,40 +1,89 @@
+//DONT TOUCH THIS STEAMING HEAP OF DOG SHIT
 plugins {
     id "java"
+    id "edu.wpi.first.GradleRIO" version "2023.1.1"
+    id "idea"
 }
 
-group 'org.bitbuckets'
-version '1.0-SNAPSHOT'
+def javaVersion = JavaVersion.VERSION_11
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
 
-repositories {
-    String frcYear = '2023'
-    File frcHome
-    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
-        String publicFolder = System.getenv('PUBLIC')
-        if (publicFolder == null) {
-            publicFolder = "C:\\Users\\Public"
+def ROBOT_MAIN_CLASS = "org.bitbuckets.bootstrap.Main"
+
+deploy {
+    targets {
+        roborio(getTargetTypeClass('RoboRIO')) {
+            team = project.frc.getTeamNumber()
+            debug = project.frc.getDebugOrDefault(false)
+
+            artifacts {
+                frcJava(getArtifactTypeClass('FRCJavaArtifact')) {}
+
+                frcStaticFileDeploy(getArtifactTypeClass('FileTreeArtifact')) {
+                    files = project.fileTree('src/main/deploy')
+                    directory = '/home/lvuser/deploy'
+                }
+            }
         }
-        def homeRoot = new File(publicFolder, "wpilib")
-        frcHome = new File(homeRoot, frcYear)
-    } else {
-        def userFolder = System.getProperty("user.home")
-        def homeRoot = new File(userFolder, "wpilib")
-        frcHome = new File(homeRoot, frcYear)
     }
-    def frcHomeMaven = new File(frcHome, 'maven')
-
-    maven {
-        name 'frcHome'
-        url frcHomeMaven
-    }
-
-    maven { url 'https://repo.superyuuki.com/snapshots' }
 }
 
-subprojects {
-    apply plugin: 'java'
+def deployArtifact = deploy.targets.roborio.artifacts.frcJava
+wpi.java.debugJni = false
+def includeDesktopSupport = true
 
-    dependencies {
-        testImplementation 'junit:junit:4.12'
+dependencies {
+    implementation wpi.java.deps.wpilib()
+    implementation wpi.java.vendor.java()
+
+    roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
+    roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)
+
+    roborioRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.roborio)
+    roborioRelease wpi.java.vendor.jniRelease(wpi.platforms.roborio)
+
+    nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
+    nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
+    simulationDebug wpi.sim.enableDebug()
+
+
+
+    testImplementation platform("org.junit:junit-bom:5.8.2")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+}
+
+test{
+    useJUnitPlatform()
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+}
+
+wpi.sim.addGui().defaultEnabled = true
+wpi.sim.addDriverstation()
+
+jar {
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+deployArtifact.jarTask = jar
+wpi.java.configureExecutableTasks(jar)
+wpi.java.configureTestTasks(test)
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs.add '-XDstringConcat=inline'
+}
+
+idea {
+    project {
+        languageLevel = javaVersion
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
     }
 }
 

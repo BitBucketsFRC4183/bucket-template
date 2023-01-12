@@ -1,10 +1,27 @@
-rootProject.name = 'season-template'
-include 'bucket-bootstrap' //YOU CANNOT MOVE THIS. IT HAS TO COME FIRST. To future perfectionists like me, i'm sorry for introducing this shitcode.
-//has to come first to load vendordep / other dependencies to the main project's children WITHOUT installing the gradle plugin on all of them.
-//in the future we are not doing multiple modules because WPILib sucks and makes it impossible to do so flexibly.
-include 'bucket-lib'
-include 'bucket-drive'
-include 'bucket-shared'
-include 'bucket-odometry'
-include 'bucket-vision'
+import org.gradle.internal.os.OperatingSystem
 
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        String frcYear = '2023'
+        File frcHome
+        if (OperatingSystem.current().isWindows()) {
+            String publicFolder = System.getenv('PUBLIC')
+            if (publicFolder == null) {
+                publicFolder = "C:\\Users\\Public"
+            }
+            def homeRoot = new File(publicFolder, "wpilib")
+            frcHome = new File(homeRoot, frcYear)
+        } else {
+            def userFolder = System.getProperty("user.home")
+            def homeRoot = new File(userFolder, "wpilib")
+            frcHome = new File(homeRoot, frcYear)
+        }
+        def frcHomeMaven = new File(frcHome, 'maven')
+        maven {
+            name 'frcHome'
+            url frcHomeMaven
+        }
+    }
+}

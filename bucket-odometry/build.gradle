@@ -1,6 +1,0 @@
-group 'org.bitbuckets'
-
-dependencies {
-    implementation project(":bucket-lib")
-    implementation project(":bucket-drive")
-}
