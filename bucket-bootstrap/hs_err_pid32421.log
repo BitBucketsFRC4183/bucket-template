@@ -1,0 +1,44 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000013146f10c, pid=32421, tid=259
+#
+# JRE version: OpenJDK Runtime Environment Temurin-11.0.13+8 (11.0.13+8) (build 11.0.13+8)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-11.0.13+8 (11.0.13+8, mixed mode, tiered, compressed oops, g1 gc, bsd-amd64)
+# Problematic frame:
+# C  [libhalsim_gui.dylib+0xd10c]  _ZNSt3__110__function6__funcIZN5glass8ProviderINS2_6detail17ProviderFunctionsEE10GlobalInitEvEUlvE_NS_9allocatorIS7_EEFvvEEclEv+0xc
+#
+# No core dump will be written. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Djava.library.path=/Users/matt/IdeaProjects/season-template/bucket-bootstrap/build/jni/release -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant /Users/matt/IdeaProjects/season-template/bucket-bootstrap/build/libs/bucket-bootstrap.jar
+
+Host: MacBookAir10,1 x86_64 2400 MHz, 8 cores, 8G, Darwin 21.6.0
+Time: Wed Jan 11 20:29:21 2023 MST elapsed time: 8.562393 seconds (0d 0h 0m 8s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f9e9100c800):  JavaThread "main" [_thread_in_native, id=259, stack(0x000000030c5ee000,0x000000030cdee000)]
+
+Stack: [0x000000030c5ee000,0x000000030cdee000],  sp=0x000000030cdeac38,  free space=8179k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libhalsim_gui.dylib+0xd10c]  _ZNSt3__110__function6__funcIZN5glass8ProviderINS2_6detail17ProviderFunctionsEE10GlobalInitEvEUlvE_NS_9allocatorIS7_EEFvvEEclEv+0xc
+C  [libhalsim_gui.dylib+0x9b516]  _ZN3wpi3gui19PlatformRenderFrameEv+0x326
+C  [libhalsim_gui.dylib+0x87c37]  _ZN3wpi3gui4MainEv+0x107
+C  [libhalsim_gui.dylib+0x1dbf9]  _ZZ20HALSIM_InitExtensionEN3$_28__invokeEPv+0x9
+j  edu.wpi.first.hal.HAL.runMain()V+0
+j  edu.wpi.first.wpilibj.RobotBase.startRobot(Ljava/util/function/Supplier;)V+83
+j  org.bitbuckets.bootstrap.Main.main([Ljava/lang/String;)V+9
+v  ~StubRoutines::call_stub
+V  [libjvm.dylib+0x3b5a80]  _ZN9JavaCalls11call_helperEP9JavaValueRK12methodHandleP17JavaCallArgumentsP6Thread+0x1fe
+V  [libjvm.dylib+0x3fb101]  _ZL17jni_invoke_staticP7JNIEnv_P9JavaValueP8_jobject11JNICallTypeP10_jmethodIDP18JNI_ArgumentPusherP6Thread+0x10a
+V  [libjvm.dylib+0x3fe9e6]  jni_CallStaticVoidMethod+0x1d2
+C  [libjli.dylib+0x4b1d]  JavaMain+0xab0
+C  [libjli.dylib+0x7065]  __JVMInit_block_invoke+0x4b

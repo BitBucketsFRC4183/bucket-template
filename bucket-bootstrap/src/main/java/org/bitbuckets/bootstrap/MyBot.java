@@ -1,18 +1,17 @@
-package org.bitbuckets.robot;
+package org.bitbuckets.bootstrap;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import org.bitbuckets.drive.DriveConstants;
 import org.bitbuckets.drive.DriveInput;
 import org.bitbuckets.drive.controller.IDriveController;
 import org.bitbuckets.drive.controller.RealDriveController;
 import org.bitbuckets.drive.controller.module.ISwerveModule;
-import org.bitbuckets.drive.controller.module.SparkSwerveModule;
+import org.bitbuckets.drive.controller.module.TalonSwerveModule;
 import org.bitbuckets.shared.RobotConstants;
 
 import java.util.Arrays;
@@ -30,29 +29,36 @@ public class MyBot extends TimedRobot {
     @Override
     public void robotInit() {
 
+        System.out.println("ON");
+
         //TODO PRESET CODE PLEASE FIX
         //TODO if this were fully functional you'd have to register these since they are IProcesses
         ISwerveModule[] modules = new ISwerveModule[] {
-                SparkSwerveModule.acquire(
-                        new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        Rotation2d.fromRadians(45)
+                TalonSwerveModule.acquire(
+                        new TalonFX(1),
+                        new TalonFX(2),
+                        new CANCoder(9),
+                        Rotation2d.fromRadians(-232.55)
                 ),
-                SparkSwerveModule.acquire(
-                        new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        Rotation2d.fromRadians(90)
+                TalonSwerveModule.acquire(
+                        new TalonFX(7),
+                        new TalonFX(8),
+                        new CANCoder(12),
+                        Rotation2d.fromRadians(-(331.96 - 180))
                 ),
-                SparkSwerveModule.acquire(
-                        new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        Rotation2d.fromRadians(180)
+                TalonSwerveModule.acquire(
+                        new TalonFX(5),
+                        new TalonFX(6),
+                        new CANCoder(11),
+                        Rotation2d.fromRadians(-255.49)
                 ),
-                SparkSwerveModule.acquire(
-                        new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        new CANSparkMax(7, CANSparkMaxLowLevel.MotorType.kBrushless),
-                        Rotation2d.fromRadians(270)
-                ),
+                TalonSwerveModule.acquire(
+                        new TalonFX(3),
+                        new TalonFX(4),
+                        new CANCoder(10),
+                        Rotation2d.fromRadians(-(70.66 + 180))
+                )
+
         };
 
 
@@ -61,13 +67,11 @@ public class MyBot extends TimedRobot {
     }
 
     @Override
-    public void robotPeriodic() {
+    public void teleopPeriodic() {
         ChassisSpeeds desired = new ChassisSpeeds(cachedInput.getInputX(), cachedInput.getInputY(), cachedInput.getInputRot());
         SwerveModuleState[] states = RobotConstants.KINEMATICS.toSwerveModuleStates(desired);
         SwerveModuleState[] optimized = Arrays.stream(states).map(s -> SwerveModuleState.optimize(s, new Rotation2d())).toArray(SwerveModuleState[]::new);
-        //TODO robot oriented
 
         cachedDriveController.doDriveWithStates(optimized);
-
     }
 }

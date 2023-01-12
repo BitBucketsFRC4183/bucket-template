@@ -71,7 +71,11 @@ public class SparkSwerveModule implements ISwerveModule, IProcess {
         }
 
         wouldSetpointAngleRadiansCache = woundSetpointAngleRadiansMod;
+        System.out.println(turnSetpoint_radians);
+
         turnPID.setReference(woundSetpointAngleRadiansMod, CANSparkMax.ControlType.kPosition);
+
+        //drive.getPIDController().setReference(velocitySetpoint_metersPerSecond);
         drive.setVoltage(DriveConstants.FF.calculate(velocitySetpoint_metersPerSecond)); //TODO replace this with velocity pid?
 
 
@@ -110,7 +114,7 @@ public class SparkSwerveModule implements ISwerveModule, IProcess {
         turn.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus1, 20); //should already be 20
         turn.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus2, 20); //should already be 20
         RelativeEncoder turnEncoder = turn.getEncoder(SparkMaxRelativeEncoder.Type.kHallSensor, 42);
-        turnEncoder.setPositionConversionFactor(DriveConstants.TURN_FACTOR_ABS_POS);
+        turnEncoder.setPositionConversionFactor(DriveConstants.TURN_FACTOR_HALL_POS);
         turnEncoder.setPosition(absoluteAngleDomainFilteredRadians); //now that you, turnEncoder, are in radians, here is our current position, in radians!
 
         return new SparkSwerveModule(drive, turn.getPIDController(), absoluteEncoder, turnEncoder, offset);

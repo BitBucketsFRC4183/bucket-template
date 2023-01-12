@@ -9,6 +9,7 @@ public interface DriveConstants {
 
     //TODO divide by 2
     double REVOLUTION = (2.0 * Math.PI);
+    double SENSOR_UNITS_PER_REVOLUTION = 2048.0;
 
     double DRIVE_REDUCTION = (14.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0); //motor -> axle
     double DRIVE_STEP_UP = 1 / DRIVE_REDUCTION; //axle -> motor
@@ -16,13 +17,18 @@ public interface DriveConstants {
     double ROTATION_REDUCTION = (14.0 / 50.0) * (10.0 / 60.0);
     double ROTATION_STEP_UP = 1 / ROTATION_REDUCTION;
 
+    //su -> revs -> radians
+    double TURN_FACTOR_FX_POS = (1/SENSOR_UNITS_PER_REVOLUTION) * REVOLUTION;
+    double TURN_FACTOR_FX_VEL = TURN_FACTOR_FX_POS / 10;
+    double DRIVE_FACTOR_FX_VEL = (1/SENSOR_UNITS_PER_REVOLUTION) * RobotConstants.WHEEL_CIRCUMFERENCE_METERS;
+
     //motor rotation -> axle rotation -> meters -> circle
-    double DRIVE_FACTOR_POS = DRIVE_REDUCTION * RobotConstants.WHEEL_DIAMETER_METERS * Math.PI;
+    double DRIVE_FACTOR_POS = DRIVE_REDUCTION * RobotConstants.WHEEL_CIRCUMFERENCE_METERS;
     double DRIVE_FACTOR_VEL = DRIVE_FACTOR_POS / 60.0;
 
-    double TURN_FACTOR_HALL_POS = DRIVE_REDUCTION * REVOLUTION; //give me radians!
+    //revs -> revs axle -> radians
+    double TURN_FACTOR_HALL_POS = ROTATION_REDUCTION * REVOLUTION; //give me radians!
     double TURN_FACTOR_HALL_VEL = TURN_FACTOR_HALL_POS / 60; //give me radians / time! or something
-
     double TURN_FACTOR_ABS_POS = (1/3.3) * REVOLUTION; //give me radians!
 
     double MAX_DRIVE_VELOCITY = 6380.0 * DRIVE_FACTOR_VEL;
