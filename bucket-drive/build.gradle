@@ -1,6 +1,0 @@
-group 'org.bitbuckets'
-
-dependencies {
-    implementation project(":bucket-lib") //this is how you declare a dependency on a lib, with project(":artifact") for local
-    implementation project(":bucket-shared")
-}
