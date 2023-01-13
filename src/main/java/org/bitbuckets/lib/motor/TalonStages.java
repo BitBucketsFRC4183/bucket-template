@@ -9,7 +9,7 @@ import org.bitbuckets.lib.index.PIDIndex;
 import org.bitbuckets.lib.motor.setpoint.IMotor;
 import org.bitbuckets.lib.motor.setpoint.TalonMotor;
 import org.bitbuckets.lib.motor.stages.*;
-import org.bitbuckets.lib.network.INetworking;
+import org.bitbuckets.lib.network.ErrorFactory;
 
 /**
  * Implements the stages in a way that guaruntees the talon is configured
@@ -23,10 +23,10 @@ import org.bitbuckets.lib.network.INetworking;
 public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, EncoderMotorPreBuild, MotorPreBuild {
 
     final int processID;
-    final INetworking console;
+    final ErrorFactory console;
     final BaseTalon talonWithID;
 
-    public TalonStages(int processID, INetworking console, BaseTalon talonWithID) {
+    public TalonStages(int processID, ErrorFactory console, BaseTalon talonWithID) {
         this.processID = processID;
         this.console = console;
         this.talonWithID = talonWithID;
@@ -101,7 +101,7 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
     public IControllerEncoder acquireEncoder() {
         //aaaaa
 
-        return null;
+        throw new UnsupportedOperationException(); //check back later
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.bitbuckets.drive;
 
 import org.bitbuckets.drive.control.RealDriveController;
 import org.bitbuckets.drive.module.ModuleSetup;
-import org.bitbuckets.lib.IProcessFactory;
+import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.Tools;
 
 /**
@@ -10,7 +10,7 @@ import org.bitbuckets.lib.Tools;
  *
  * really fucking simple because a drivecontrol is super simple LMAO
  */
-public class DriveControlSetup implements IProcessFactory<RealDriveController> {
+public class DriveControlSetup implements ISetup<RealDriveController> {
 
     final ModuleSetup fr;
     final ModuleSetup fl;

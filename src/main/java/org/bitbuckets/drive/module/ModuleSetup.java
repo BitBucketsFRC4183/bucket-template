@@ -1,12 +1,11 @@
 package org.bitbuckets.drive.module;
 
-import org.bitbuckets.lib.IProcessFactory;
+import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.Tools;
 import org.bitbuckets.lib.motor.EncoderType;
 import org.bitbuckets.lib.motor.stages.EncoderMotorPreBuild;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
-public class ModuleSetup implements IProcessFactory<GenericSwerveModule> {
+public class ModuleSetup implements ISetup<GenericSwerveModule> {
 
     final int driveId;
     final int turnId;
@@ -25,7 +24,7 @@ public class ModuleSetup implements IProcessFactory<GenericSwerveModule> {
     @Override
     public GenericSwerveModule build(Tools tools) { //This assumes we've already got an ID lmao
         EncoderMotorPreBuild drive = tools.talonFXFactory()
-                .buildNewMotor(driveId,false,false,false, 80.0)
+                .buildNewMotor(driveId,false,false,false, 80.0) //always supply side, like we in econ >:)
                 .usePID(false, driveConstants)
                 .withEncoder(EncoderType.INTEGRATED);
 
@@ -36,7 +35,6 @@ public class ModuleSetup implements IProcessFactory<GenericSwerveModule> {
 
 
         GenericSwerveModule mod = new GenericSwerveModule( drive.build(false), turnStage.build(false), drive.acquireEncoder(), turnStage.acquireEncoder());
-
 
         return mod;
 

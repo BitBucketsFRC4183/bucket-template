@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.motor.stages.InitPreBuild;
-import org.bitbuckets.lib.network.INetworking;
+import org.bitbuckets.lib.network.ErrorFactory;
 
 import static java.lang.String.format;
 
@@ -13,12 +13,12 @@ import static java.lang.String.format;
  * Represents the absolute essential config values that need to be configured for a talon
  * also checks if the talon exists, etc, basic stuff so i dont have to care
  */
-public class FXMotorFactory implements IMotorFactory {
+public class TalonMotorFactory implements IMotorFactory {
 
     final int processID;
-    final INetworking console;
+    final ErrorFactory console;
 
-    public FXMotorFactory(int processID, INetworking console) {
+    public TalonMotorFactory(int processID, ErrorFactory console) {
         this.processID = processID;
         this.console = console;
     }

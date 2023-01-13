@@ -27,7 +27,7 @@ public class TempBootRobot extends LoggedRobot {
             Logger.getInstance().addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
             new PowerDistribution(1, PowerDistribution.ModuleType.kRev); // Enables power distribution logging
         } else {
-            logger.addDataReceiver(new WPILOGWriter(""));
+            logger.addDataReceiver(new WPILOGWriter("analysis/"));
             logger.addDataReceiver(new NT4Publisher());
         }
 
