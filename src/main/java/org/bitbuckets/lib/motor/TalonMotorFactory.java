@@ -4,7 +4,7 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import org.bitbuckets.lib.motor.stages.InitPreBuild;
+import org.bitbuckets.lib.motor.stages.InitStage;
 import org.bitbuckets.lib.network.ErrorFactory;
 
 import static java.lang.String.format;
@@ -24,7 +24,7 @@ public class TalonMotorFactory implements IMotorFactory {
     }
 
     @Override
-    public InitPreBuild buildNewMotor(int canId, boolean brushless, boolean inverted, boolean neutralMode, double currentLimit) {
+    public InitStage buildNewMotor(int canId, boolean brushless, boolean inverted, boolean neutralMode, double currentLimit) {
         TalonFX preInitMotor = new TalonFX(canId);
         if (ErrorCode.OK != preInitMotor.configFactoryDefault()) {
             console.flagError(processID, "something went horribly wrong");

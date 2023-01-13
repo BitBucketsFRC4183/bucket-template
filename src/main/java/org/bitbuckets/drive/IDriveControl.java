@@ -1,4 +1,4 @@
-package org.bitbuckets.drive.control;
+package org.bitbuckets.drive;
 
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -6,7 +6,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 /**
  * Represents a high level controller of the drivetrain
  */
-public interface IDriveController {
+public interface IDriveControl {
 
     /**
      *

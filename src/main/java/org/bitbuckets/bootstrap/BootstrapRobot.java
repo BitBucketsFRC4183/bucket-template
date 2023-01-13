@@ -1,17 +1,22 @@
 package org.bitbuckets.bootstrap;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
-import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
-import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-public class TempBootRobot extends LoggedRobot {
+/**
+ * Launchpoint for the robot (It's like the launchpoint for the robot or something)
+ */
+public class BootstrapRobot extends LoggedRobot {
+
+
 
     @Override
     public void robotInit() {
+
+        //inner setup script
 
         Logger logger = Logger.getInstance();
 
@@ -32,5 +37,8 @@ public class TempBootRobot extends LoggedRobot {
         }
 
         Logger.getInstance().start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+        //TODO RobotSetup here, set to a Robot instance, etc
+
     }
 }

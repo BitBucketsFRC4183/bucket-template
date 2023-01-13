@@ -30,7 +30,12 @@ class SparkSwerveModule implements ISwerveModule {
 
 
     @Override
-    public void outputSensorReadings(SwerveModuleSensor mutableSensorObject) {
+    public void generateSensorData(SensorData data) {
+
+    }
+
+    @Override
+    public void consumeSensorData(SensorData data) {
 
     }
 

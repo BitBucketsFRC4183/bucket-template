@@ -10,14 +10,12 @@ public interface ISwerveModule {
 
 
     @AutoLog
-    class SwerveModuleSensor {
-        double somePieceofData; //heh i thought they were making use of object pooling?
-        //nah, they turn it around and stick it into an autobuilder that destroys performance
-        //totally fine though as long as it works
+    class SensorData {
+        double somePieceofData;
     }
 
-    void outputSensorReadings(SwerveModuleSensor mutableSensorObject);
-
+    void generateSensorData(SensorData data); //run now
+    void consumeSensorData(SensorData data); //run later
 
     /**
      * Queries the swerve module implementation

@@ -9,28 +9,28 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import org.bitbuckets.drive.DriveControlSetup;
 import org.bitbuckets.drive.DriveInput;
-import org.bitbuckets.drive.control.IDriveController;
-import org.bitbuckets.drive.control.RealDriveController;
+import org.bitbuckets.drive.IDriveControl;
+import org.bitbuckets.drive.RealDriveControl;
 import org.bitbuckets.drive.module.ISwerveModule;
-import org.bitbuckets.drive.module.ModuleSetup;
+import org.bitbuckets.drive.module.SwerveModuleSetup;
 import org.bitbuckets.drive.module.TalonSwerveModule;
 import org.bitbuckets.lib.index.PIDIndex;
 import org.bitbuckets.robot.RobotConstants;
-import org.littletonrobotics.junction.Logger;
 
 import java.util.Arrays;
 
-public class BootRobot extends TimedRobot {
+@Deprecated
+public class OldBootBot extends TimedRobot {
 
     DriveInput cachedInput;
-    IDriveController cachedDriveController;
+    IDriveControl cachedDriveController;
 
 
     @Override
     public void robotInit() {
 
         new DriveControlSetup(
-                new ModuleSetup(0,1, PIDIndex.CONSTANTS(0,0,0,0,0), PIDIndex.CONSTANTS(0,0,0,0,0)),
+                new SwerveModuleSetup(0,1, PIDIndex.CONSTANTS(0,0,0,0,0), PIDIndex.CONSTANTS(0,0,0,0,0)),
                 null,
                 null,
                 null
@@ -75,7 +75,7 @@ public class BootRobot extends TimedRobot {
         System.out.println("CONTINUE");
 
 
-        cachedDriveController = new RealDriveController(modules);
+        cachedDriveController = new RealDriveControl(modules);
         cachedInput = new DriveInput(new Joystick(0));
     }
 

@@ -1,11 +1,11 @@
 package org.bitbuckets.robot;
 
 import org.bitbuckets.lib.ISetup;
-import org.bitbuckets.lib.Tools;
+import org.bitbuckets.lib.UserBucketLib;
 
-public class RobotSetup implements ISetup<Robot> {
+public class RobotSetup implements ISetup<RobotContainer> {
     @Override
-    public Robot build(Tools tools) {
+    public RobotContainer build(UserBucketLib userBucketLib) {
 
 
 

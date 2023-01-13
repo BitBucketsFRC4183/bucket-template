@@ -3,7 +3,7 @@ package org.bitbuckets.lib;
 /**
  * Represents a whole ass robot that has had it's dependencies initialized
  */
-public interface IRobot {
+public interface IRobotContainer {
 
     /**
      * Don't use this

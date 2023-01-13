@@ -1,4 +1,4 @@
-package org.bitbuckets.drive.control;
+package org.bitbuckets.drive;
 
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -7,11 +7,11 @@ import org.bitbuckets.drive.module.ISwerveModule;
 /**
  * Represents a real drive controller that implements control of the drivetrain using a list of SwerveModule interfaces
  */
-public class RealDriveController implements IDriveController {
+public class RealDriveControl implements IDriveControl {
 
     final ISwerveModule[] swerveModules;
 
-    public RealDriveController(ISwerveModule... swerveModules) {
+    public RealDriveControl(ISwerveModule... swerveModules) {
         this.swerveModules = swerveModules;
     }
 

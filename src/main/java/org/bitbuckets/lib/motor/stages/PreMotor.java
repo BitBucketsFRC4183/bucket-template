@@ -6,7 +6,7 @@ import org.bitbuckets.lib.motor.setpoint.IMotor;
  * The third stage of setting up your motor where you decide whether to use
  * my ridiculous optimizations or not
  */
-public interface MotorPreBuild {
+public interface PreMotor {
 
     /**
      * enables non-pid oriented status frame modifications if enabled

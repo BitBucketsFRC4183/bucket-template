@@ -3,6 +3,8 @@ package org.bitbuckets.lib.motor.setpoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
+import java.util.Optional;
+
 /**
  * Talon FX setpoint
  */
@@ -23,10 +25,21 @@ public class TalonMotor implements IMotor {
     @Override
     public void moveAt(double units) {
         if (cachedUnits != units) {
-            //TODO more optimizations because i'm that cool
-
             cachedUnits = units;
+
             talon.set(mode, units);
         }
+    }
+
+
+    //ignore this reflection code because if everyone on the team is coding diligently
+    //we wont even need it!
+    @Override
+    public <T> Optional<T> underlyingMotor(Class<T> typeOfMotor) {
+        if (typeOfMotor.equals(BaseTalon.class)) {
+            return Optional.of(typeOfMotor.cast(talon));
+        }
+
+        return Optional.empty();
     }
 }

@@ -1,6 +1,6 @@
 package org.bitbuckets.lib.motor;
 
-import org.bitbuckets.lib.motor.stages.InitPreBuild;
+import org.bitbuckets.lib.motor.stages.InitStage;
 
 /**
  * Represents a the creation of a motor
@@ -16,7 +16,7 @@ public interface IMotorFactory {
      * @param currentLimit set to Double.NAN for no limit
      * @return
      */
-    InitPreBuild buildNewMotor(int canId, boolean brushless, boolean inverted, boolean neutralMode, double currentLimit);
+    InitStage buildNewMotor(int canId, boolean brushless, boolean inverted, boolean neutralMode, double currentLimit);
 
 
 

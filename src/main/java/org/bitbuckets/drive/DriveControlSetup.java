@@ -1,23 +1,22 @@
 package org.bitbuckets.drive;
 
-import org.bitbuckets.drive.control.RealDriveController;
-import org.bitbuckets.drive.module.ModuleSetup;
+import org.bitbuckets.drive.module.SwerveModuleSetup;
 import org.bitbuckets.lib.ISetup;
-import org.bitbuckets.lib.Tools;
+import org.bitbuckets.lib.UserBucketLib;
 
 /**
  * Sets up prereqs for a drive controller
  *
  * really fucking simple because a drivecontrol is super simple LMAO
  */
-public class DriveControlSetup implements ISetup<RealDriveController> {
+public class DriveControlSetup implements ISetup<RealDriveControl> {
 
-    final ModuleSetup fr;
-    final ModuleSetup fl;
-    final ModuleSetup br;
-    final ModuleSetup bl;
+    final SwerveModuleSetup fr;
+    final SwerveModuleSetup fl;
+    final SwerveModuleSetup br;
+    final SwerveModuleSetup bl;
 
-    public DriveControlSetup(ModuleSetup fr, ModuleSetup fl, ModuleSetup br, ModuleSetup bl) {
+    public DriveControlSetup(SwerveModuleSetup fr, SwerveModuleSetup fl, SwerveModuleSetup br, SwerveModuleSetup bl) {
         this.fr = fr;
         this.fl = fl;
         this.br = br;
@@ -25,12 +24,12 @@ public class DriveControlSetup implements ISetup<RealDriveController> {
     }
 
     @Override
-    public RealDriveController build(Tools tools) {
-        return new RealDriveController(
-                fr.build(tools.child("swerve-module-fr")),
-                fl.build(tools.child("swerve-module-fl")),
-                br.build(tools.child("swerve-module-br")),
-                bl.build(tools.child("swerve-module-bl"))
+    public RealDriveControl build(UserBucketLib userBucketLib) {
+        return new RealDriveControl(
+                fr.build(userBucketLib.child("swerve-module-fr")),
+                fl.build(userBucketLib.child("swerve-module-fl")),
+                br.build(userBucketLib.child("swerve-module-br")),
+                bl.build(userBucketLib.child("swerve-module-bl"))
         );
     }
 }

@@ -1,6 +1,6 @@
-package org.bitbuckets.lib.motor;
+package org.bitbuckets.lib.motor.encoder;
 
-import edu.wpi.first.wpilibj.Encoder;
+import org.bitbuckets.lib.motor.BaseUnitType;
 
 /**
  * Represents an encoder that's on a motor controller
@@ -11,7 +11,7 @@ public interface IControllerEncoder {
     //transparency
 
     boolean isAbsolute();
-    double getConversionFactor();
+    double getGeneralConversionFactor();
     BaseUnitType getBaseUnitType();
 
     double getPosition();

@@ -4,8 +4,9 @@ import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
-import org.bitbuckets.lib.LibConstants;
+import org.bitbuckets.lib.constants.LibConstants;
 import org.bitbuckets.lib.index.PIDIndex;
+import org.bitbuckets.lib.motor.encoder.IControllerEncoder;
 import org.bitbuckets.lib.motor.setpoint.IMotor;
 import org.bitbuckets.lib.motor.setpoint.TalonMotor;
 import org.bitbuckets.lib.motor.stages.*;
@@ -20,7 +21,7 @@ import org.bitbuckets.lib.network.ErrorFactory;
  *
  * this is like motorutils but worse
  */
-public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, EncoderMotorPreBuild, MotorPreBuild {
+public class TalonStages implements InitStage, PercentStage, PidStage, PreEncoderMotor, PreMotor {
 
     final int processID;
     final ErrorFactory console;
@@ -35,7 +36,7 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
     ControlMode cachedMode = ControlMode.Disabled;
 
     @Override
-    public PercentPreBuild usePercent() {
+    public PercentStage usePercent() {
         cachedMode = ControlMode.PercentOutput;
 
         talonWithID.set(ControlMode.PercentOutput, 0);
@@ -43,7 +44,7 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
     }
 
     @Override
-    public PidPreBuild usePID(boolean positionOrVelocity, double[] constants) {
+    public PidStage usePID(boolean positionOrVelocity, double[] constants) {
         cachedMode = positionOrVelocity ? ControlMode.Velocity : ControlMode.Position; //ternary is a tiny if statement
 
         talonWithID.set(ControlMode.PercentOutput, 0); // i said stop
@@ -73,7 +74,7 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
 
 
     @Override
-    public EncoderMotorPreBuild withEncoder(EncoderType type) {
+    public PreEncoderMotor withEncoder(EncoderType type) {
 
         ErrorCode code = null;
         if (type == EncoderType.ANALOG) {
@@ -93,7 +94,7 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
 
     //this is stupid
     @Override
-    public EncoderMotorPreBuild withNoEncoder() {
+    public PreEncoderMotor withNoEncoder() {
         return this;
     }
 
@@ -102,6 +103,11 @@ public class TalonStages implements InitPreBuild, PercentPreBuild, PidPreBuild, 
         //aaaaa
 
         throw new UnsupportedOperationException(); //check back later
+    }
+
+    @Override
+    public IControllerEncoder acquireRotationEncoder() {
+        return null;
     }
 
     @Override

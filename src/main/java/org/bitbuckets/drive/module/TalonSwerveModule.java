@@ -13,6 +13,7 @@ import com.ctre.phoenix.sensors.CANCoderStatusFrame;
 import edu.wpi.first.math.geometry.Rotation2d;
 import org.bitbuckets.drive.DriveConstants;
 
+@Deprecated
 public class TalonSwerveModule implements ISwerveModule {
 
     final TalonFX drive;
@@ -25,8 +26,14 @@ public class TalonSwerveModule implements ISwerveModule {
         this.absolute = absolute;
     }
 
+
     @Override
-    public void outputSensorReadings(SwerveModuleSensor mutableSensorObject) {
+    public void generateSensorData(SensorData data) {
+
+    }
+
+    @Override
+    public void consumeSensorData(SensorData data) {
 
     }
 

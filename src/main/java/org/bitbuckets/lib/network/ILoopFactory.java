@@ -1,5 +1,7 @@
 package org.bitbuckets.lib.network;
 
+import java.util.List;
+
 public interface ILoopFactory {
 
     /**
@@ -25,5 +27,12 @@ public interface ILoopFactory {
      * @param runnable
      */
     void registerPriorityLoop(Runnable runnable);
+
+    /**
+     * DONT CALL THIS UNLESS YOU WANT TO CRY
+     * @return
+     */
+    @Deprecated
+    List<Runnable> extract();
 
 }

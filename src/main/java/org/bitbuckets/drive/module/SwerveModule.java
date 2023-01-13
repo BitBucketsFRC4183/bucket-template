@@ -2,25 +2,31 @@ package org.bitbuckets.drive.module;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import org.bitbuckets.drive.DriveConstants;
-import org.bitbuckets.lib.motor.IControllerEncoder;
+import org.bitbuckets.lib.motor.encoder.IControllerEncoder;
 import org.bitbuckets.lib.motor.setpoint.IMotor;
 
-public class GenericSwerveModule implements ISwerveModule {
+public class SwerveModule implements ISwerveModule {
 
     final IMotor drive;
     final IMotor turn;
     final IControllerEncoder driveEncoder;
     final IControllerEncoder turnEncoder;
 
-    public GenericSwerveModule(IMotor drive, IMotor turn, IControllerEncoder driveEncoder, IControllerEncoder turnEncoder) {
+    public SwerveModule(IMotor drive, IMotor turn, IControllerEncoder driveEncoder, IControllerEncoder turnEncoder) {
         this.drive = drive;
         this.turn = turn;
         this.driveEncoder = driveEncoder;
         this.turnEncoder = turnEncoder;
     }
 
+
     @Override
-    public void outputSensorReadings(SwerveModuleSensor mutableSensorObject) {
+    public void generateSensorData(SensorData data) {
+
+    }
+
+    @Override
+    public void consumeSensorData(SensorData data) {
 
     }
 
