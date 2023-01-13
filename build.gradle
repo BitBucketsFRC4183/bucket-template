@@ -109,6 +109,6 @@ gversion {
     classPackage = "org.bitbuckets.bootstrap"
     className    = "BuildConstants"
     dateFormat   = "yyyy-MM-dd HH:mm:ss z"
-    timeZone     = "America/New_York"
+    timeZone     = "America/Phoenix"
     indent       = "  "
 }
