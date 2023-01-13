@@ -1,6 +1,8 @@
 /.idea/
 /.gradle/
 # Project exclude paths
-/bucket-bootstrap/build/
-/bucket-bootstrap/build/classes/java/main/
 /build/
+/src/main/java/org/bitbuckets/bootstrap/BuildConstants.java
+simgui-ds.json
+simgui.json
+simgui-window.json
