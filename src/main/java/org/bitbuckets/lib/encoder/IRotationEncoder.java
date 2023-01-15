@@ -14,12 +14,13 @@ public interface IRotationEncoder {
     double getMotorFactor();
     BaseUnitType getBaseUnitType();
 
-    double getEncoderPosition_radians();
-    double getMechanismPosition_radians();
-    double getPositionRaw();
+    double getEncoderPositionAccumulated_radians();
+    double getEncoderPositionBounded_radians();
 
-    double getEncoderVelocity_radiansPerSecond();
-    double getVelocityRaw();
+    double getMechanismPositionAccumulated_radians();
+    double getMechanismPositionBounded_radians();
+
+    double getPositionRaw();
 
     <T> T rawAccess(Class<T> clazz);
 

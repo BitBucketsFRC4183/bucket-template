@@ -66,7 +66,7 @@ public class IdentityManagerImpl implements IIdentityManager {
             if (parent == null) break;
             searchId = parent.parent;
 
-            deque.addLast(nameCache.get(parent.parent));
+            deque.addFirst(nameCache.get(parent.parent));
         }
 
         //w
@@ -78,6 +78,10 @@ public class IdentityManagerImpl implements IIdentityManager {
         }
 
         String str = builder.toString();
+
+        if (!str.endsWith("/")) {
+            str += "/";
+        }
 
         fullNameCache.put(id, str);
 

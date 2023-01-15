@@ -1,6 +1,5 @@
 package org.bitbuckets.lib.encoder.talon;
 
-import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.motor.BaseUnitType;
@@ -32,29 +31,29 @@ public class TalonRotationEncoder implements IRotationEncoder {
     }
 
     @Override
-    public double getEncoderPosition_radians() {
-        //su -> revs -> rads
-        return getPositionRaw() / 2048 * (2 * Math.PI);
+    public double getEncoderPositionAccumulated_radians() {
+        return getPositionRaw() / 2048 * (2.0 * Math.PI);
     }
 
     @Override
-    public double getMechanismPosition_radians() {
-        return Angle.bind2pi_radians(getEncoderPosition_radians() * gearRatio_revs); //actually produces rads
+    public double getEncoderPositionBounded_radians() {
+        //su -> revs -> rads
+        return Angle.wrap(getEncoderPositionAccumulated_radians());
+    }
+
+    @Override
+    public double getMechanismPositionAccumulated_radians() {
+        return getEncoderPositionAccumulated_radians() * gearRatio_revs;
+    }
+
+    @Override
+    public double getMechanismPositionBounded_radians() {
+        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio_revs); //actually produces rads
     }
 
     @Override
     public double getPositionRaw() {
         return talon.getSensorCollection().getIntegratedSensorPosition();
-    }
-
-    @Override
-    public double getEncoderVelocity_radiansPerSecond() {
-        return 0;
-    }
-
-    @Override
-    public double getVelocityRaw() {
-        return 0;
     }
 
     @Override

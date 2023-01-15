@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.IHandle;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.constants.LibConstants;
@@ -36,6 +37,9 @@ public class TalonPercentSetup implements ISetup<IMotor> {
         talon.setSensorPhase(true);
         talon.setInverted(inverted);
         talon.setNeutralMode(NeutralMode.Brake);
+
+        //TODO get oudda here :(
+        CTREPhysicsSim.getInstance().addFX(talon, .75, 5100, true);
 
         return new TalonMotor(talon, ControlMode.PercentOutput);
     }

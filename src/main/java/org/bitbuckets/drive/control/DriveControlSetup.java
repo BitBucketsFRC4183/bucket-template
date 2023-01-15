@@ -26,11 +26,15 @@ public class DriveControlSetup implements ISetup<DriveControl> {
 
     @Override
     public DriveControl build(IHandle userBucketLib) {
-        return new DriveControl(
+        DriveControl control = new DriveControl(
                 frontLeft.build(userBucketLib.child("swerve-module-fr")),
                 frontRight.build(userBucketLib.child("swerve-module-fl")),
                 backLeft.build(userBucketLib.child("swerve-module-br")),
                 backRight.build(userBucketLib.child("swerve-module-bl"))
         );
+
+        userBucketLib.logFactory().periodicModuleLogger("ass", () -> control.cached);
+
+        return control;
     }
 }

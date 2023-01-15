@@ -6,12 +6,15 @@ import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.BaseUnitType;
 
+//don't touch the math or your head will come off
 public class CANRotationEncoder implements IRotationEncoder {
 
+    final double offset_degrees;
     final double gearRatio;
     final WPI_CANCoder coder;
 
-    public CANRotationEncoder(double gearRatio, WPI_CANCoder coder) {
+    public CANRotationEncoder(double offset_degrees, double gearRatio, WPI_CANCoder coder) {
+        this.offset_degrees = offset_degrees;
         this.gearRatio = gearRatio;
         this.coder = coder;
     }
@@ -32,28 +35,28 @@ public class CANRotationEncoder implements IRotationEncoder {
     }
 
     @Override
-    public double getEncoderPosition_radians() {
-        return Angle.bind2pi_radians(Math.toRadians(getPositionRaw()));
+    public double getEncoderPositionAccumulated_radians() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public double getMechanismPosition_radians() {
-        return getEncoderPosition_radians() * gearRatio;
+    public double getEncoderPositionBounded_radians() {
+        return Math.toRadians(getPositionRaw());
+    }
+
+    @Override
+    public double getMechanismPositionAccumulated_radians() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public double getMechanismPositionBounded_radians() {
+        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio);
     }
 
     @Override
     public double getPositionRaw() {
         return coder.getAbsolutePosition();
-    }
-
-    @Override
-    public double getEncoderVelocity_radiansPerSecond() {
-        return 0;
-    }
-
-    @Override
-    public double getVelocityRaw() {
-        return 0;
     }
 
     @Override

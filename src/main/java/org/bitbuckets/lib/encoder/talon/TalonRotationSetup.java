@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.IHandle;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.ctre.Talon;
-import org.bitbuckets.lib.encoder.IEncoder;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 
 public class TalonRotationSetup implements ISetup<IRotationEncoder> {
@@ -20,9 +19,16 @@ public class TalonRotationSetup implements ISetup<IRotationEncoder> {
     @Override
     public IRotationEncoder build(IHandle userBucketLib) {
         TalonFX fx = Talon.init(id);
+        TalonRotationEncoder encoder = new TalonRotationEncoder(fx, gearRatio);
 
         //TODO logging, other setup
 
-        return new TalonRotationEncoder(fx, gearRatio);
+        userBucketLib.logFactory().periodicDoubleLogger("bound", encoder::getEncoderPositionBounded_radians);
+        userBucketLib.logFactory().periodicDoubleLogger("accum", encoder::getEncoderPositionAccumulated_radians);
+        userBucketLib.logFactory().periodicDoubleLogger("mechbound", encoder::getMechanismPositionBounded_radians);
+        userBucketLib.logFactory().periodicDoubleLogger("mechaccum", encoder::getMechanismPositionAccumulated_radians);
+        userBucketLib.logFactory().periodicDoubleLogger("raw",encoder::getPositionRaw);
+
+        return encoder;
     }
 }

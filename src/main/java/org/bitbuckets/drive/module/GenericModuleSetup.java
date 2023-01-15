@@ -3,11 +3,7 @@ package org.bitbuckets.drive.module;
 import org.bitbuckets.lib.IHandle;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
-import org.bitbuckets.lib.encoder.fusion.FusionRotationEncoder;
-import org.bitbuckets.lib.encoder.fusion.FusionRotationSetup;
 import org.bitbuckets.lib.motor.IMotor;
-import org.bitbuckets.lib.motor.talon.TalonClosedSetup;
-import org.bitbuckets.lib.motor.talon.TalonPercentSetup;
 import org.bitbuckets.lib.network.Loggable;
 
 public class GenericModuleSetup implements ISetup<GenericModule> {
@@ -29,8 +25,9 @@ public class GenericModuleSetup implements ISetup<GenericModule> {
         IMotor driveMotor = drive.build(tools.child("drive-motor"));
         IMotor turnMotor = turn.build(tools.child("turn-motor"));
         IRotationEncoder turnEncoderSelf = turnEncoder.build(tools.child("turn-encoder"));
-        Loggable<Double> filter = tools.logFactory().doubleLogger("filtered-setpoint");
+
         Loggable<Double> preFilter = tools.logFactory().doubleLogger("pre-filtered-setpoint");
+        Loggable<Double> filter = tools.logFactory().doubleLogger("setpoint");
 
         return new GenericModule(driveMotor, turnMotor, turnEncoderSelf, filter, preFilter);
     }

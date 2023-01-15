@@ -1,5 +1,6 @@
 package org.bitbuckets.drive.control;
 
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import org.bitbuckets.drive.DriveConstants;
 import org.bitbuckets.drive.module.GenericModule;
@@ -15,7 +16,7 @@ public class DriveControl implements IDriveControl {
         this.modules = modules;
     }
 
-    SwerveModuleState[] cached;
+    SwerveModuleState[] cached = DriveConstants.LOCK;
 
     @Override
     public void doDriveWithStates(SwerveModuleState[] states) {

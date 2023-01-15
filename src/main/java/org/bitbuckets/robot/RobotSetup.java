@@ -29,32 +29,32 @@ public class RobotSetup implements ISetup<RobotContainer> {
                         new TalonPercentSetup(1, 80, true),
                         new TalonClosedSetup(2, 20, true, PIDIndex.CONSTANTS(1,0,0.1,0,0)),
                         new FusionRotationSetup(
-                                new TalonRotationSetup(2, DriveConstants.DRIVE_REDUCTION),
-                                new CANRotationSetup(9,-Math.toRadians(232.55),1)
+                                new TalonRotationSetup(2, DriveConstants.ROTATION_REDUCTION),
+                                new CANRotationSetup(9,-232.55,1)
                         )
                 ),
                 new GenericModuleSetup(
                         new TalonPercentSetup(7, 80, true),
                         new TalonClosedSetup(8, 20, true, PIDIndex.CONSTANTS(1,0,0.1,0,0)),
                         new FusionRotationSetup(
-                                new TalonRotationSetup(8, DriveConstants.DRIVE_REDUCTION),
-                                new CANRotationSetup(12,-Math.toRadians(331.96 - 180),1)
+                                new TalonRotationSetup(8, DriveConstants.ROTATION_REDUCTION),
+                                new CANRotationSetup(12,-(331.96 - 180),1)
                         )
                 ),
                 new GenericModuleSetup(
                         new TalonPercentSetup(5, 80, true),
                         new TalonClosedSetup(6, 20, true, PIDIndex.CONSTANTS(1,0,0.1,0,0)),
                         new FusionRotationSetup(
-                                new TalonRotationSetup(6, DriveConstants.DRIVE_REDUCTION),
-                                new CANRotationSetup(11,-Math.toRadians(255.49),1)
+                                new TalonRotationSetup(6, DriveConstants.ROTATION_REDUCTION),
+                                new CANRotationSetup(11,-(255.49),1)
                         )
                 ),
                 new GenericModuleSetup(
                         new TalonPercentSetup(3, 80, true),
                         new TalonClosedSetup(4, 20, true, PIDIndex.CONSTANTS(1,0,0.1,0,0)),
                         new FusionRotationSetup(
-                                new TalonRotationSetup(4, DriveConstants.DRIVE_REDUCTION),
-                                new CANRotationSetup(10,-Math.toRadians(70.66 + 180),1)
+                                new TalonRotationSetup(4, DriveConstants.ROTATION_REDUCTION),
+                                new CANRotationSetup(10,-(70.66 + 180),1)
                         )
                 )
 

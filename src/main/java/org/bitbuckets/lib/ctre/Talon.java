@@ -1,7 +1,7 @@
 package org.bitbuckets.lib.ctre;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import org.bitbuckets.lib.CTREPhysicsSim;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +17,8 @@ public class Talon {
             fx = new WPI_TalonFX(id);
             fxMap.put(id, fx);
         }
+
+        CTREPhysicsSim.getInstance().addFX(fx, .75, 5100, true);
 
         return fx;
     }

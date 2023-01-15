@@ -22,6 +22,7 @@ public interface ILoopManager {
      */
     void registerLoop(Runnable runnable);
 
+
     /**
      * Registers a runnable to run every periodic frame, before any other runnables scheduled to run every frame
      * @param runnable

@@ -7,7 +7,7 @@ public class Angle {
      * @param unbound_radians any radian value
      * @return that radian value represented from [0 to 2pi]
      */
-    public static double bind2pi_radians(double unbound_radians) {
+    public static double wrap(double unbound_radians) {
         double angle = unbound_radians;
 
         angle %= 2.0 * Math.PI;

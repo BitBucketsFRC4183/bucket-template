@@ -2,6 +2,7 @@ package org.bitbuckets.bootstrap;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import org.bitbuckets.lib.BucketLib;
+import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.IRobotContainer;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.robot.RobotContainer;
@@ -66,8 +67,14 @@ public class BootstrapRobot extends LoggedRobot {
 
     @Override
     public void robotPeriodic() {
+
         libHandle.runLoop();
         robotHandle.teleopPeriodic();
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        //CTREPhysicsSim.getInstance().run();
     }
 
 }
