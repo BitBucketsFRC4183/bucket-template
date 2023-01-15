@@ -1,13 +1,10 @@
 package org.bitbuckets.lib.network;
 
-import org.bitbuckets.lib.network.util.CachedConsumer;
-import org.bitbuckets.lib.network.util.UnaryAcceptor;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 /**
  * Implementation
@@ -15,12 +12,12 @@ import java.util.function.UnaryOperator;
 public class LogFactoryImpl implements ILogFactory {
 
     final Logger logger;
-    final IIdentityFactory identities;
-    final ILoopFactory loopFactory;
+    final IIdentityManager identities;
+    final ILoopManager loopFactory;
     final int selfIdentity;
 
-    public LogFactoryImpl(Logger logger, IIdentityFactory identities, ILoopFactory loopFactory, int selfIdentity) {
-        this.logger = logger;
+    public LogFactoryImpl(IIdentityManager identities, ILoopManager loopFactory, int selfIdentity) {
+        this.logger = Logger.getInstance();
         this.identities = identities;
         this.loopFactory = loopFactory;
         this.selfIdentity = selfIdentity;
@@ -29,22 +26,29 @@ public class LogFactoryImpl implements ILogFactory {
 
     @Override
     public Loggable<Integer> intLogger(String id) {
-        return new CachedConsumer<>(i -> logger.recordOutput(identities.fullPath(selfIdentity) + "/" + id, i));
+        return i -> logger.recordOutput(id, i);
     }
 
     @Override
     public Loggable<String> stringLogger(String id) {
-        return new CachedConsumer<>(i -> logger.recordOutput(identities.fullPath(selfIdentity) + "/" + id, i));
+        return i -> logger.recordOutput(id, i);
     }
 
     @Override
     public Loggable<Double> doubleLogger(String id) {
-        return new CachedConsumer<>(i -> logger.recordOutput(identities.fullPath(selfIdentity) + "/" + id, i));
+        return i -> logger.recordOutput(id, i);
     }
 
     @Override
     public Loggable<double[]> arrayLogger(String id) {
-        return new CachedConsumer<>(i -> logger.recordOutput(identities.fullPath(selfIdentity) + "/" + id, i));
+        return i -> logger.recordOutput(id, i);
+    }
+
+    @Override
+    public void periodicDoubleLogger(String id, Supplier<Double> data) {
+        loopFactory.registerLoop(() -> {
+            logger.recordOutput(id,data.get());
+        });
     }
 
     @Override

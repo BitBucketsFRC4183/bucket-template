@@ -2,10 +2,13 @@ package org.bitbuckets.robot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import org.bitbuckets.drive.DriveConstants;
 import org.bitbuckets.drive.DriveInput;
-import org.bitbuckets.drive.IDriveControl;
+import org.bitbuckets.drive.control.IDriveControl;
 import org.bitbuckets.lib.IRobotContainer;
+import org.bitbuckets.lib.network.Loggable;
 
 import java.util.Arrays;
 
@@ -14,8 +17,7 @@ import java.util.Arrays;
  */
 public class RobotContainer implements IRobotContainer {
 
-
-    final DriveInput input; //TODO make this mockable (needs log playback support)
+    final DriveInput input;
     final IDriveControl driveController;
 
     public RobotContainer(DriveInput input, IDriveControl driveController) {
@@ -29,12 +31,13 @@ public class RobotContainer implements IRobotContainer {
     }
 
     public void teleopPeriodic() {
-        ChassisSpeeds desired = new ChassisSpeeds(input.getInputX(), input.getInputY(), input.getInputRot());
+        ChassisSpeeds desired = new ChassisSpeeds(input.getInputX() * 4, input.getInputY() * 4, input.getInputRot() * DriveConstants.MAX_ANG_VELOCITY);
+
         SwerveModuleState[] states = RobotConstants.KINEMATICS.toSwerveModuleStates(desired);
-        SwerveModuleState[] optimized = Arrays.stream(states).map(s -> SwerveModuleState.optimize(s, new Rotation2d())).toArray(SwerveModuleState[]::new);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.MAX_DRIVE_VELOCITY);
 
 
-        driveController.doDriveWithStates(optimized);
+        driveController.doDriveWithStates(states);
     }
 
 }

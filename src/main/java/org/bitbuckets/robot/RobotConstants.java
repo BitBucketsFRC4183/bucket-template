@@ -10,14 +10,12 @@ public interface RobotConstants {
     double WHEEL_DIAMETER_METERS = 0.10033;
     double WHEEL_CIRCUMFERENCE_METERS = WHEEL_DIAMETER_METERS * Math.PI;
 
-    Translation2d[] KINEMATICS_TRANSLATIONS = new Translation2d[] {
+    SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
             new Translation2d(WIDTH, BASE),
             new Translation2d(WIDTH, -BASE),
             new Translation2d(-WIDTH, BASE),
             new Translation2d(-WIDTH, -BASE)
-    };
-
-    SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(KINEMATICS_TRANSLATIONS);
+    );
 
 
 }

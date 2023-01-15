@@ -14,6 +14,8 @@ public interface ILogFactory {
 
     Loggable<double[]> arrayLogger(String id);
 
+    void periodicDoubleLogger(String id, Supplier<Double> data);
+
     <T extends LoggableInputs> void registerInputLoop(Supplier<T> constructor, Consumer<T> updateInputs, Consumer<T> updateDevices);
 
 }

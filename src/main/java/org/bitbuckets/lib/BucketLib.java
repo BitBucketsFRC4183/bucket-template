@@ -1,30 +1,34 @@
 package org.bitbuckets.lib;
 
-import org.bitbuckets.lib.network.ILogFactory;
-import org.bitbuckets.lib.network.ILoopFactory;
+import org.bitbuckets.lib.network.*;
 
-public interface BucketLib {
+import java.util.ArrayList;
+import java.util.List;
 
-
-    /**
-     * You must call this if you are calling factories inside a factory
-     * @param name the name associated with this code module
-     * @return a sub-tools build specifically for the child factory. You must pass it to the child factory.
-     */
-    BucketLib child(String name);
+public class BucketLib {
 
 
-    /**
-     * A factory that allows you to register arbitrary code on the periodic loop with execution reserved
-     * before all commands and subsystems
-     * @return
-     */
-    ILoopFactory loopFactory();
+    final List<Runnable> runnables = new ArrayList<>();
 
-    /**
-     * A factory that generates Loggables, simple classes that can take your data and share it with me :D
-     * @return
-     */
-    ILogFactory logFactory();
+    final ILoopManager loop = new LoopManagerImpl(runnables);
+    final IIdentityManager identity = new IdentityManagerImpl();
+    final ErrorManager error = new ErrorManager(identity);
 
+    public void setup() {
+        //nothing to do...
+    }
+
+    public IHandle rootHandle() {
+        return new BucketHandle(0, identity, error, loop);
+    }
+
+
+
+
+
+    public void runLoop() {
+        for (Runnable runnable : runnables) {
+            runnable.run();
+        }
+    }
 }
