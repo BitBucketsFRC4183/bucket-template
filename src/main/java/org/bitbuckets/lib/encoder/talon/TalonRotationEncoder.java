@@ -38,7 +38,7 @@ public class TalonRotationEncoder implements IRotationEncoder {
     @Override
     public double getEncoderPositionBounded_radians() {
         //su -> revs -> rads
-        return Angle.wrap(getEncoderPositionAccumulated_radians());
+        return getEncoderPositionAccumulated_radians();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TalonRotationEncoder implements IRotationEncoder {
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio_revs); //actually produces rads
+        return Angle.wrap(getEncoderPositionAccumulated_radians() * gearRatio_revs); //actually produces rads
     }
 
     @Override

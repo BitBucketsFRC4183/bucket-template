@@ -1,22 +1,19 @@
-package org.bitbuckets.lib.encoder.can;
+package org.bitbuckets.lib.encoder.fusion;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.BaseUnitType;
 
-//don't touch the math or your head will come off
-public class CANRotationEncoder implements IRotationEncoder {
+import java.util.function.Supplier;
 
-    final double offset_degrees;
+public class MockEncoder implements IRotationEncoder {
+
     final double gearRatio;
-    final WPI_CANCoder coder;
+    final Supplier<Double> raw;
 
-    public CANRotationEncoder(double offset_degrees, double gearRatio, WPI_CANCoder coder) {
-        this.offset_degrees = offset_degrees;
+    public MockEncoder(double gearRatio, Supplier<Double> raw) {
         this.gearRatio = gearRatio;
-        this.coder = coder;
+        this.raw = raw;
     }
 
     @Override
@@ -31,40 +28,37 @@ public class CANRotationEncoder implements IRotationEncoder {
 
     @Override
     public BaseUnitType getBaseUnitType() {
-        return BaseUnitType.DEGREES;
+        return BaseUnitType.FUSION;
     }
 
     @Override
     public double getEncoderPositionAccumulated_radians() {
-        throw new UnsupportedOperationException();
+        return getPositionRaw() / 2048 * (2.0 * Math.PI);
     }
 
     @Override
     public double getEncoderPositionBounded_radians() {
-        return Math.toRadians(getPositionRaw());
+        //su -> revs -> rads
+        return getEncoderPositionAccumulated_radians();
     }
 
     @Override
     public double getMechanismPositionAccumulated_radians() {
-        throw new UnsupportedOperationException();
+        return getEncoderPositionAccumulated_radians() * gearRatio;
     }
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        throw new UnsupportedOperationException();
+        return getEncoderPositionBounded_radians() * gearRatio; //actually produces rads
     }
 
     @Override
     public double getPositionRaw() {
-        return coder.getAbsolutePosition();
+        return raw.get();
     }
 
     @Override
     public <T> T rawAccess(Class<T> clazz) {
-        if (clazz.equals(CANCoder.class)) {
-            return clazz.cast(coder);
-        }
-
         throw new UnsupportedOperationException();
     }
 }

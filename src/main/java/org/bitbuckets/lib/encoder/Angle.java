@@ -10,7 +10,7 @@ public class Angle {
     public static double wrap(double unbound_radians) {
         double angle = unbound_radians;
 
-        angle %= 2.0 * Math.PI;
+        angle %= (2.0 * Math.PI);
         if (angle < 0.0) {
             angle += 2.0 * Math.PI;
         }

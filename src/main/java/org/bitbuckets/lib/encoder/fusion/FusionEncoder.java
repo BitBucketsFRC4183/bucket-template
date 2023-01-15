@@ -1,6 +1,7 @@
 package org.bitbuckets.lib.encoder.fusion;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import org.bitbuckets.drive.DriveConstants;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.BaseUnitType;
@@ -24,19 +25,20 @@ public class FusionEncoder implements IRotationEncoder {
 
         if (counter > 500) {
             counter = 0;
-            //math in mechanism-space
-            double totalAccumPlusAngle_radians = talon.getMechanismPositionAccumulated_radians(); //0
-            double totalAngle = totalAccumPlusAngle_radians % (2.0 * Math.PI); //0
-            double totalAccumOnly = Angle.wrap(totalAccumPlusAngle_radians - totalAngle); //accumulated radians
+
             //0 - 0
             double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
-            double totalAccumPlusReal_radians = totalAccumOnly + actualAngle; //1.9
+            System.out.println("aa " + actualAngle);
+
+
+            System.out.println("prev");
 
             //convert from accumulated + real radians back to the talon SU lmao
-            double adjusted = totalAccumPlusReal_radians / talon.getMotorFactor() / 2.0 / Math.PI * 2048;
+            double adjusted = actualAngle / (Math.PI * 2) / DriveConstants.ROTATION_REDUCTION * 2048;
+            System.out.println("adju " + adjusted);
 
             //TODO WARNING BLOCKING CODE HERE
-            talon.rawAccess(TalonFX.class).setSelectedSensorPosition(adjusted, 0, 0);
+            talon.rawAccess(TalonFX.class).setSelectedSensorPosition(-adjusted);
         }
 
     }
