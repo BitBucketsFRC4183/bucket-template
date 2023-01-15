@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.CTREPhysicsSim;
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.constants.LibConstants;
 import org.bitbuckets.lib.ctre.Talon;
@@ -25,7 +25,7 @@ public class TalonPercentSetup implements ISetup<IMotor> {
     }
 
     @Override
-    public TalonMotor build(IHandle userBucketLib) {
+    public TalonMotor build(IProcessPath userBucketLib) {
         TalonFX talon = Talon.init(id);
         talon.configFactoryDefault();
         talon.configVoltageCompSaturation(12);

@@ -2,7 +2,7 @@ package org.bitbuckets.lib;
 
 import org.bitbuckets.lib.network.*;
 
-public class BucketHandle implements IHandle {
+public class BucketProcessPath implements IProcessPath {
 
     final int currentId;
 
@@ -12,7 +12,7 @@ public class BucketHandle implements IHandle {
     final ILogFactory selfLogFactory;
 
 
-    public BucketHandle(int currentId, IIdentityManager identityFactory, ErrorManager errorManager, ILoopManager loopManager) {
+    public BucketProcessPath(int currentId, IIdentityManager identityFactory, ErrorManager errorManager, ILoopManager loopManager) {
         this.currentId = currentId;
         this.identityFactory = identityFactory;
         this.errorManager = errorManager;
@@ -26,10 +26,10 @@ public class BucketHandle implements IHandle {
     }
 
     @Override
-    public IHandle child(String name) {
+    public IProcessPath addChild(String name) {
         int childId = identityFactory.childProcess(currentId, name);
 
-        return new BucketHandle(childId, identityFactory, errorManager, loopManager);
+        return new BucketProcessPath(childId, identityFactory, errorManager, loopManager);
     }
 
 

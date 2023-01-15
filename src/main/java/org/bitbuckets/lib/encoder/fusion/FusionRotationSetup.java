@@ -1,6 +1,6 @@
 package org.bitbuckets.lib.encoder.fusion;
 
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 
@@ -15,9 +15,9 @@ public class FusionRotationSetup implements ISetup<IRotationEncoder> {
     }
 
     @Override
-    public FusionEncoder build(IHandle handle) {
-        IRotationEncoder tal = talonEncoder.build(handle.child("talon"));
-        IRotationEncoder absolute = canEncoder.build(handle.child("can"));
+    public FusionEncoder build(IProcessPath handle) {
+        IRotationEncoder tal = talonEncoder.build(handle.addChild("talon"));
+        IRotationEncoder absolute = canEncoder.build(handle.addChild("can"));
 
         FusionEncoder encoder = new FusionEncoder(tal, absolute);
         encoder.realign();

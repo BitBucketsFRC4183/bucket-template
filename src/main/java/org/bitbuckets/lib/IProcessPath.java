@@ -3,7 +3,11 @@ package org.bitbuckets.lib;
 import org.bitbuckets.lib.network.ILogFactory;
 import org.bitbuckets.lib.network.ILoopManager;
 
-public interface IHandle {
+/**
+ * Represents a path in the process tree during setup
+ * This path can add children to itself and register loggers and loops for this process
+ */
+public interface IProcessPath {
 
     boolean isTest();
 
@@ -12,7 +16,7 @@ public interface IHandle {
      * @param name the name associated with this code module
      * @return a sub-tools build specifically for the child factory. You must pass it to the child factory.
      */
-    IHandle child(String name);
+    IProcessPath addChild(String name);
 
 
     /**

@@ -5,6 +5,10 @@ import org.bitbuckets.lib.network.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
+/**
+ * TODO: Move logic into RobotContainer
+ */
 public class BucketLib {
 
 
@@ -18,8 +22,8 @@ public class BucketLib {
         //nothing to do...
     }
 
-    public IHandle rootHandle() {
-        return new BucketHandle(0, identity, error, loop);
+    public IProcessPath rootProcessPath() {
+        return new BucketProcessPath(0, identity, error, loop);
     }
 
 

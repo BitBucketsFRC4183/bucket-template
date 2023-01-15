@@ -2,7 +2,6 @@ package org.bitbuckets.bootstrap;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import org.bitbuckets.lib.BucketLib;
-import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.IRobotContainer;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.robot.RobotContainer;
@@ -15,6 +14,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 /**
  * Launchpoint for the robot (It's like the launchpoint for the robot or something)
  * Has all the bucketlib and advantagekit code in it so don't touch it unless you really need to
+ * TODO: rename BootstrapRobot to Robot
  */
 public class BootstrapRobot extends LoggedRobot {
 
@@ -57,7 +57,7 @@ public class BootstrapRobot extends LoggedRobot {
         BucketLib lib = new BucketLib();
         RobotSetup setup = new RobotSetup();
 
-        robotHandle = setup.build(lib.rootHandle());
+        robotHandle = setup.build(lib.rootProcessPath());
         //TODO RobotSetup here, set to a Robot instance, etc
 
         libHandle = lib;

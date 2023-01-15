@@ -1,8 +1,7 @@
 package org.bitbuckets.drive.control;
 
 import org.bitbuckets.drive.module.GenericModule;
-import org.bitbuckets.drive.module.GenericModuleSetup;
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 
 /**
@@ -25,12 +24,12 @@ public class DriveControlSetup implements ISetup<DriveControl> {
     }
 
     @Override
-    public DriveControl build(IHandle userBucketLib) {
+    public DriveControl build(IProcessPath userBucketLib) {
         DriveControl control = new DriveControl(
-                frontLeft.build(userBucketLib.child("swerve-module-fr")),
-                frontRight.build(userBucketLib.child("swerve-module-fl")),
-                backLeft.build(userBucketLib.child("swerve-module-br")),
-                backRight.build(userBucketLib.child("swerve-module-bl"))
+                frontLeft.build(userBucketLib.addChild("swerve-module-fr")),
+                frontRight.build(userBucketLib.addChild("swerve-module-fl")),
+                backLeft.build(userBucketLib.addChild("swerve-module-br")),
+                backRight.build(userBucketLib.addChild("swerve-module-bl"))
         );
 
         userBucketLib.logFactory().periodicModuleLogger("ass", () -> control.cached);
