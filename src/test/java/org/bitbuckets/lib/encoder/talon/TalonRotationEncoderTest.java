@@ -33,4 +33,11 @@ class TalonRotationEncoderTest {
 
         assertEquals(Math.toRadians(180), rotationEncoder.getMechanismPositionBounded_radians());
     }
+
+    @Test
+    void getMechanismPositionAbsolute_radians() {
+        TalonRotationEncoder encoder = new TalonRotationEncoder(0.5, () -> 2048.0,null);
+
+        assertEquals(Math.PI, encoder.getMechanismPositionAccumulated_radians());
+    }
 }

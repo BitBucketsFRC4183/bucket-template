@@ -5,11 +5,11 @@ import org.bitbuckets.lib.motor.BaseUnitType;
 
 import java.util.function.Supplier;
 
-public class MockAbsoluteEncoder implements IRotationEncoder {
+public class AbsoluteEncoderDegrees implements IRotationEncoder {
 
     final Supplier<Double> angleDegress;
 
-    public MockAbsoluteEncoder(Supplier<Double> angleDegress) {
+    public AbsoluteEncoderDegrees(Supplier<Double> angleDegress) {
         this.angleDegress = angleDegress;
     }
 

@@ -1,5 +1,8 @@
 package org.bitbuckets.drive.module;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.IMotor;
@@ -19,6 +22,10 @@ public class GenericModule {
         this.wheelAxisEncoder = wheelAxisEncoder;
         this.filteredSetpoint = filteredSetpoint;
         this.preFilteredSetpoint = preFilteredSetpoint;
+    }
+
+    public SwerveModuleState currentState() {
+        return new SwerveModuleState(drive.underlyingMotor(TalonFX.class).get().getSelectedSensorVelocity(), Rotation2d.fromRadians(wheelAxisEncoder.getPositionRaw()));
     }
 
     /**

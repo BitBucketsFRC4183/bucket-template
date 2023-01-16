@@ -1,5 +1,6 @@
 package org.bitbuckets.lib;
 
+import org.bitbuckets.lib.network.ErrorManager;
 import org.bitbuckets.lib.network.ILogFactory;
 import org.bitbuckets.lib.network.ILoopManager;
 
@@ -27,6 +28,8 @@ public interface IHandle {
      * @return
      */
     ILogFactory logFactory();
+
+    ErrorManager errorManager();
 
     interface ReportFactory {
         //TODO fill it out
