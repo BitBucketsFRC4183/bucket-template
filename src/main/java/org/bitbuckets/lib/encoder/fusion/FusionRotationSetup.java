@@ -20,8 +20,8 @@ public class FusionRotationSetup implements ISetup<IRotationEncoder> {
         IRotationEncoder absolute = canEncoder.build(handle.addChild("can"));
 
         FusionEncoder encoder = new FusionEncoder(tal, absolute);
-        encoder.realign();
-        handle.loopFactory().registerLoop(encoder::realign);
+        //encoder.realign();
+        //handle.loopFactory().registerLoop(encoder::realign);
 
         return encoder;
     }

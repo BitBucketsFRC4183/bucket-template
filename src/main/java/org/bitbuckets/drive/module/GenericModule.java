@@ -1,5 +1,8 @@
 package org.bitbuckets.drive.module;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.IMotor;
@@ -21,6 +24,10 @@ public class GenericModule {
         this.preFilteredSetpoint = preFilteredSetpoint;
     }
 
+    public SwerveModuleState currentState() {
+        return new SwerveModuleState(drive.underlyingMotor(TalonFX.class).get().getSelectedSensorVelocity(), Rotation2d.fromRadians(wheelAxisEncoder.getPositionRaw()));
+    }
+
     /**
      * Commands the swerve module to obtain the specified velocity and heading
      * @param velocitySetpoint_metersPerSecond
@@ -32,7 +39,6 @@ public class GenericModule {
         preFilteredSetpoint.log(realSetpoint_radians);
         double difference_radians = realSetpoint_radians - wheelAxisEncoder.getMechanismPositionBounded_radians();
         double velocitySetpoint = velocitySetpoint_metersPerSecond;
-
 
 
         if (difference_radians >= Math.PI) {
@@ -50,12 +56,18 @@ public class GenericModule {
 
         realSetpoint_radians = Angle.wrap(realSetpoint_radians);
 
+
         filteredSetpoint.log(realSetpoint_radians);
 
         //TODO i forgot to add the good setpoint
 
+        double a = realSetpoint_radians / wheelAxisEncoder.getMotorFactor();
+        double b = a / (2.0 * Math.PI);
+        double c = b * 2048.0;
+
         //OOP
+
         drive.moveAt(velocitySetpoint);
-        turn.moveAt(realSetpoint_radians); //TODO this is wrong
+        turn.moveAt(c); //TODO this is wrong
     }
 }

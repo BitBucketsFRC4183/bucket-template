@@ -2,6 +2,7 @@ package org.bitbuckets.lib.encoder.talon;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.IProcessPath;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.ctre.Talon;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
@@ -19,7 +20,11 @@ public class TalonRotationSetup implements ISetup<IRotationEncoder> {
     @Override
     public IRotationEncoder build(IProcessPath userBucketLib) {
         TalonFX fx = Talon.init(id);
-        TalonRotationEncoder encoder = new TalonRotationEncoder(fx, gearRatio);
+
+        fx.setInverted(true);
+        fx.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
+
+        TalonRotationEncoder encoder = new TalonRotationEncoder(gearRatio, fx::getSelectedSensorPosition, () -> fx   );
 
         //TODO logging, other setup
 

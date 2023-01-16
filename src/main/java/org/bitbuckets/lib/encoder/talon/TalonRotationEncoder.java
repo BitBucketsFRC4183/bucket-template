@@ -1,18 +1,21 @@
 package org.bitbuckets.lib.encoder.talon;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.encoder.Angle;
-import org.bitbuckets.lib.motor.BaseUnitType;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
+import org.bitbuckets.lib.motor.BaseUnitType;
+
+import java.util.function.Supplier;
 
 public class TalonRotationEncoder implements IRotationEncoder {
 
-    final TalonFX talon;
-    final double gearRatio_revs;
+    final double gearRatio;
+    final Supplier<Double> raw;
+    final Supplier<Object> self;
 
-    public TalonRotationEncoder(TalonFX talon, double gearRatio_revs) {
-        this.talon = talon;
-        this.gearRatio_revs = gearRatio_revs;
+    public TalonRotationEncoder(double gearRatio, Supplier<Double> raw, Supplier<Object> self) {
+        this.gearRatio = gearRatio;
+        this.raw = raw;
+        this.self = self;
     }
 
     @Override
@@ -22,12 +25,12 @@ public class TalonRotationEncoder implements IRotationEncoder {
 
     @Override
     public double getMotorFactor() {
-        return gearRatio_revs;
+        return gearRatio;
     }
 
     @Override
     public BaseUnitType getBaseUnitType() {
-        return BaseUnitType.SU;
+        return BaseUnitType.FUSION;
     }
 
     @Override
@@ -37,32 +40,27 @@ public class TalonRotationEncoder implements IRotationEncoder {
 
     @Override
     public double getEncoderPositionBounded_radians() {
-        //su -> revs -> rads
+        //su -> revs ->
         return Angle.wrap(getEncoderPositionAccumulated_radians());
     }
 
     @Override
     public double getMechanismPositionAccumulated_radians() {
-        return getEncoderPositionAccumulated_radians() * gearRatio_revs;
+        return getEncoderPositionAccumulated_radians() * gearRatio;
     }
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio_revs); //actually produces rads
+        return Angle.wrap(getEncoderPositionAccumulated_radians() * gearRatio); //actually produces rads
     }
 
     @Override
     public double getPositionRaw() {
-        return talon.getSensorCollection().getIntegratedSensorPosition();
+        return raw.get();
     }
 
     @Override
     public <T> T rawAccess(Class<T> clazz) {
-        if (clazz.equals(TalonFX.class)) {
-            return clazz.cast(talon);
-        }
-
-        throw new UnsupportedOperationException();
+        return clazz.cast(self.get());
     }
-
 }

@@ -1,32 +1,26 @@
 package org.bitbuckets.lib.encoder.can;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
-import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.BaseUnitType;
 
-//don't touch the math or your head will come off
-public class CANRotationEncoder implements IRotationEncoder {
+import java.util.function.Supplier;
 
-    final double offset_degrees;
-    final double gearRatio;
-    final WPI_CANCoder coder;
+public class AbsoluteEncoderDegrees implements IRotationEncoder {
 
-    public CANRotationEncoder(double offset_degrees, double gearRatio, WPI_CANCoder coder) {
-        this.offset_degrees = offset_degrees;
-        this.gearRatio = gearRatio;
-        this.coder = coder;
+    final Supplier<Double> angleDegress;
+
+    public AbsoluteEncoderDegrees(Supplier<Double> angleDegress) {
+        this.angleDegress = angleDegress;
     }
 
     @Override
     public boolean isAbsolute() {
-        return false;
+        return true;
     }
 
     @Override
     public double getMotorFactor() {
-        return gearRatio;
+        return 1;
     }
 
     @Override
@@ -56,15 +50,11 @@ public class CANRotationEncoder implements IRotationEncoder {
 
     @Override
     public double getPositionRaw() {
-        return coder.getAbsolutePosition();
+        return angleDegress.get();
     }
 
     @Override
     public <T> T rawAccess(Class<T> clazz) {
-        if (clazz.equals(CANCoder.class)) {
-            return clazz.cast(coder);
-        }
-
         throw new UnsupportedOperationException();
     }
 }

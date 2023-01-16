@@ -13,9 +13,9 @@ public interface DriveConstants {
 
     double ROTATION_REDUCTION = (15.0 / 32.0) * (10.0 / 60.0);
 
-    double MAX_DRIVE_VELOCITY = 6380.0;
+    double MAX_DRIVE_VELOCITY = 6380.0 / 60.0 * (14.0 / 50.0) * (27.0 / 17.0) * (15.0 / 45.0) * 0.10033 * Math.PI;
     double SLOW_DRIVE_VELOCITY = MAX_DRIVE_VELOCITY * 0.75;
-    double MAX_ANG_VELOCITY = Math.hypot(RobotConstants.WIDTH / 2.0, RobotConstants.BASE / 2.0);
+    double MAX_ANG_VELOCITY = MAX_DRIVE_VELOCITY / Math.hypot(RobotConstants.WIDTH, RobotConstants.BASE);
 
     //TODO get rid of this shit
     SimpleMotorFeedforward FF = new SimpleMotorFeedforward(0.65292, 2.3053, 0.37626); //converts velocity to voltage

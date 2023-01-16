@@ -1,6 +1,7 @@
 package org.bitbuckets.lib.encoder.fusion;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import org.bitbuckets.drive.DriveConstants;
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.BaseUnitType;
@@ -12,32 +13,33 @@ public class FusionEncoder implements IRotationEncoder {
     final IRotationEncoder can; //we trust you the most (i don't know why you suck)
 
     int counter = 0;
+    boolean fired = false;
 
     public FusionEncoder(IRotationEncoder talon, IRotationEncoder can) {
         this.talon = talon;
         this.can = can;
     }
 
+    public double calculateAlignSU() {
+
+        double totalAccumPlusAngle_radians = talon.getMechanismPositionAccumulated_radians(); //0
+        double totalAngle = totalAccumPlusAngle_radians % (2.0 * Math.PI); //0
+
+        double taoPrewrap = totalAccumPlusAngle_radians - totalAngle;
+
+
+        double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
+        double totalAccumPlusReal_radians = taoPrewrap + actualAngle; //1.9
+        double adjusted = totalAccumPlusReal_radians / (Math.PI * 2) / talon.getMotorFactor() * 2048;
+
+        return adjusted;
+    }
+
     public void realign() {
 
+        talon.rawAccess(TalonFX.class).setSelectedSensorPosition(calculateAlignSU());
+
         counter++;
-
-        if (counter > 500) {
-            counter = 0;
-            //math in mechanism-space
-            double totalAccumPlusAngle_radians = talon.getMechanismPositionAccumulated_radians(); //0
-            double totalAngle = totalAccumPlusAngle_radians % (2.0 * Math.PI); //0
-            double totalAccumOnly = Angle.wrap(totalAccumPlusAngle_radians - totalAngle); //accumulated radians
-            //0 - 0
-            double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
-            double totalAccumPlusReal_radians = totalAccumOnly + actualAngle; //1.9
-
-            //convert from accumulated + real radians back to the talon SU lmao
-            double adjusted = totalAccumPlusReal_radians / talon.getMotorFactor() / 2.0 / Math.PI * 2048;
-
-            //TODO WARNING BLOCKING CODE HERE
-            talon.rawAccess(TalonFX.class).setSelectedSensorPosition(adjusted, 0, 0);
-        }
 
     }
 
@@ -48,7 +50,7 @@ public class FusionEncoder implements IRotationEncoder {
 
     @Override
     public double getMotorFactor() {
-        throw new UnsupportedOperationException();
+        return talon.getMotorFactor();
     }
 
     @Override
@@ -75,7 +77,7 @@ public class FusionEncoder implements IRotationEncoder {
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return can.getMechanismPositionBounded_radians();
+        return talon.getMechanismPositionBounded_radians();
     }
 
     @Override

@@ -11,6 +11,8 @@ import java.util.Optional;
  */
 public interface IMotor {
 
+    double cachedUnits();
+
     void moveAt(double units);
 
     /**

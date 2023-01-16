@@ -21,15 +21,18 @@ public class TalonMotor implements IMotor {
         this.mode = mode;
     }
 
-    double cachedUnits = Double.NaN; //only command the motor if our setpoint has changed
+    double cachedUnits = 0.0;
+
+    @Override
+    public double cachedUnits() {
+        return cachedUnits;
+    }
 
     @Override
     public void moveAt(double units) {
-        if (cachedUnits != units) {
-            cachedUnits = units;
+        cachedUnits = units;
 
-            talon.set(mode, units);
-        }
+        talon.set(mode, units);
     }
 
 

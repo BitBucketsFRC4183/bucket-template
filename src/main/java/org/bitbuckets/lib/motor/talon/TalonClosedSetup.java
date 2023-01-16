@@ -37,7 +37,7 @@ public class TalonClosedSetup implements ISetup<IMotor> {
         talon.configFactoryDefault();
         talon.configVoltageCompSaturation(12);
         talon.enableVoltageCompensation(true);
-        SupplyCurrentLimitConfiguration config = new SupplyCurrentLimitConfiguration(!Double.isNaN(currentLimit), currentLimit, 0,0);
+        SupplyCurrentLimitConfiguration config = new SupplyCurrentLimitConfiguration(true, currentLimit, 0,0);
         talon.configSupplyCurrentLimit(config, 250);
         talon.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, LibConstants.TIMEOUT_MS);
 
@@ -45,11 +45,18 @@ public class TalonClosedSetup implements ISetup<IMotor> {
         talon.config_kI(0, pidConstants[PIDIndex.I]);
         talon.config_kD(0, pidConstants[PIDIndex.D]);
 
-        talon.setSensorPhase(true);
-        talon.setInverted(inverted);
+        talon.setSensorPhase(false);
+        //talon.setInverted(inverted);
         talon.setNeutralMode(NeutralMode.Brake);
 
+        TalonMotor motor  = new TalonMotor(talon, ControlMode.Position);
 
-        return new TalonMotor(talon, ControlMode.Position);
+        userBucketLib.logFactory().periodicDoubleLogger("setpoint", talon::getSelectedSensorPosition);
+        userBucketLib.logFactory().periodicDoubleLogger("cachedunits", motor::cachedUnits);
+
+        talon.getSelectedSensorPosition();
+        talon.getClosedLoopTarget();
+
+        return motor;
     }
 }
