@@ -24,13 +24,12 @@ public class FusionEncoder implements IRotationEncoder {
 
         double totalAccumPlusAngle_radians = talon.getMechanismPositionAccumulated_radians(); //0
         double totalAngle = totalAccumPlusAngle_radians % (2.0 * Math.PI); //0
+
         double taoPrewrap = totalAccumPlusAngle_radians - totalAngle;
-        double totalAccumOnly = Angle.wrap(taoPrewrap); //accumulated radians
 
 
-        //0 - 0
         double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
-        double totalAccumPlusReal_radians = totalAccumOnly + actualAngle; //1.9
+        double totalAccumPlusReal_radians = taoPrewrap + actualAngle; //1.9
         double adjusted = totalAccumPlusReal_radians / (Math.PI * 2) / talon.getMotorFactor() * 2048;
 
         return adjusted;

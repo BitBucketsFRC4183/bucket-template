@@ -12,13 +12,12 @@ class FusionEncoderTest {
     @Test
     public void testSomeMethod() {
 
-        IRotationEncoder encoderMock = new TalonRotationEncoder(DriveConstants.ROTATION_REDUCTION, () -> 2048.0, UnsupportedOperationException::new);
-        IRotationEncoder absoluteEncoderMock = new MockAbsoluteEncoder(() -> 360.0);
-
+        IRotationEncoder encoderMock = new TalonRotationEncoder(DriveConstants.ROTATION_REDUCTION, () -> 4096.0, UnsupportedOperationException::new);
+        IRotationEncoder absoluteEncoderMock = new MockAbsoluteEncoder(() -> 10.0);
 
         FusionEncoder encoder = new FusionEncoder(encoderMock, absoluteEncoderMock);
 
-        Assertions.assertEquals(2048, encoder.calculateAlignSU());
+        Assertions.assertEquals(Math.toRadians(360 + 10), encoder.calculateAlignSU());
     }
 
 
