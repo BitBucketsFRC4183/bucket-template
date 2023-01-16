@@ -1,25 +1,18 @@
 package org.bitbuckets.lib.encoder.fusion;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.WPI_CANCoder;
-import edu.wpi.first.hal.HAL;
 import org.bitbuckets.drive.DriveConstants;
-import org.bitbuckets.drive.module.GenericModule;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.encoder.can.MockAbsoluteEncoder;
-import org.bitbuckets.lib.encoder.talon.MockEncoder;
-import org.bitbuckets.lib.motor.talon.TalonMotor;
+import org.bitbuckets.lib.encoder.talon.TalonRotationEncoder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class FusionEncoderTest {
 
     @Test
     public void testSomeMethod() {
 
-        IRotationEncoder encoderMock = new MockEncoder(DriveConstants.ROTATION_REDUCTION, () -> 2048.0, UnsupportedOperationException::new);
+        IRotationEncoder encoderMock = new TalonRotationEncoder(DriveConstants.ROTATION_REDUCTION, () -> 2048.0, UnsupportedOperationException::new);
         IRotationEncoder absoluteEncoderMock = new MockAbsoluteEncoder(() -> 360.0);
 
 

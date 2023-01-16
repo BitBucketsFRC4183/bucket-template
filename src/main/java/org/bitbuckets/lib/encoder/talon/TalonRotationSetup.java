@@ -24,7 +24,7 @@ public class TalonRotationSetup implements ISetup<IRotationEncoder> {
         fx.setInverted(true);
         fx.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
-        MockEncoder encoder = new MockEncoder(gearRatio, fx::getSelectedSensorPosition, () -> fx   );
+        TalonRotationEncoder encoder = new TalonRotationEncoder(gearRatio, fx::getSelectedSensorPosition, () -> fx   );
 
         //TODO logging, other setup
 

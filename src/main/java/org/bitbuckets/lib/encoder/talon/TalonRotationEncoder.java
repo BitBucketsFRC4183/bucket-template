@@ -6,13 +6,13 @@ import org.bitbuckets.lib.motor.BaseUnitType;
 
 import java.util.function.Supplier;
 
-public class MockEncoder implements IRotationEncoder {
+public class TalonRotationEncoder implements IRotationEncoder {
 
     final double gearRatio;
     final Supplier<Double> raw;
     final Supplier<Object> self;
 
-    public MockEncoder(double gearRatio, Supplier<Double> raw, Supplier<Object> self) {
+    public TalonRotationEncoder(double gearRatio, Supplier<Double> raw, Supplier<Object> self) {
         this.gearRatio = gearRatio;
         this.raw = raw;
         this.self = self;
@@ -40,7 +40,7 @@ public class MockEncoder implements IRotationEncoder {
 
     @Override
     public double getEncoderPositionBounded_radians() {
-        //su -> revs -> rads
+        //su -> revs ->
         return Angle.wrap(getEncoderPositionAccumulated_radians());
     }
 
@@ -51,7 +51,7 @@ public class MockEncoder implements IRotationEncoder {
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio); //actually produces rads
+        return Angle.wrap(getEncoderPositionAccumulated_radians() * gearRatio); //actually produces rads
     }
 
     @Override
