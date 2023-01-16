@@ -19,6 +19,6 @@ public interface ISetup<T> {
      * @param userBucketLib a variety of tools.
      * @return a fully initialized object
      */
-    T build(IHandle userBucketLib);
+    T build(IProcessPath userBucketLib);
 
 }

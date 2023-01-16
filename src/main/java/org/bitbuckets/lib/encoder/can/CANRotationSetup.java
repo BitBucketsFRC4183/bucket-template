@@ -1,7 +1,7 @@
 package org.bitbuckets.lib.encoder.can;
 
 import com.ctre.phoenix.sensors.*;
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 
@@ -18,7 +18,7 @@ public class CANRotationSetup implements ISetup<IRotationEncoder> {
     }
 
     @Override
-    public CANRotationEncoder build(IHandle userBucketLib) {
+    public CANRotationEncoder build(IProcessPath userBucketLib) {
 
         WPI_CANCoder encoder = new WPI_CANCoder(canCoderId);
 

@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.constants.LibConstants;
 import org.bitbuckets.lib.ctre.Talon;
@@ -30,7 +30,7 @@ public class TalonClosedSetup implements ISetup<IMotor> {
     }
 
     @Override
-    public TalonMotor build(IHandle userBucketLib) {
+    public TalonMotor build(IProcessPath userBucketLib) {
 
         //IMPORTANT: IMOTOR setup should happen BEFORE ENCODER setup if ENCODER is integrated!
         TalonFX talon = Talon.init(id);

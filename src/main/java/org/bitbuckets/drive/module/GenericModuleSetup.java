@@ -1,6 +1,6 @@
 package org.bitbuckets.drive.module;
 
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 import org.bitbuckets.lib.motor.IMotor;
@@ -21,10 +21,10 @@ public class GenericModuleSetup implements ISetup<GenericModule> {
 
 
     @Override
-    public GenericModule build(IHandle tools) {
-        IMotor driveMotor = drive.build(tools.child("drive-motor"));
-        IMotor turnMotor = turn.build(tools.child("turn-motor"));
-        IRotationEncoder turnEncoderSelf = turnEncoder.build(tools.child("turn-encoder"));
+    public GenericModule build(IProcessPath tools) {
+        IMotor driveMotor = drive.build(tools.addChild("drive-motor"));
+        IMotor turnMotor = turn.build(tools.addChild("turn-motor"));
+        IRotationEncoder turnEncoderSelf = turnEncoder.build(tools.addChild("turn-encoder"));
 
         Loggable<Double> preFilter = tools.logFactory().doubleLogger("pre-filtered-setpoint");
         Loggable<Double> filter = tools.logFactory().doubleLogger("setpoint");

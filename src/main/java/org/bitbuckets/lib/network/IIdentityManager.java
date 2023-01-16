@@ -2,6 +2,12 @@ package org.bitbuckets.lib.network;
 
 /**
  * true to the name it manages identities
+ *
+ * The identities are used to build smartdashboard paths such as
+ * intake/control/intakeMotorSpeed
+ *
+ * TODO: Eventually, the IdentityManager will be used to manage subsystems with multiple components, and support enabling/disabling them
+ * For example you could disable /drive or /drive/balance/* to disable all functionality in that path
  */
 public interface IIdentityManager {
 

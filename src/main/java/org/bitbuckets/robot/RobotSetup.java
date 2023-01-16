@@ -6,7 +6,7 @@ import org.bitbuckets.drive.DriveInput;
 import org.bitbuckets.drive.control.DriveControl;
 import org.bitbuckets.drive.control.DriveControlSetup;
 import org.bitbuckets.drive.module.GenericModuleSetup;
-import org.bitbuckets.lib.IHandle;
+import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.encoder.can.CANRotationSetup;
 import org.bitbuckets.lib.encoder.fusion.FusionRotationSetup;
@@ -19,7 +19,7 @@ public class RobotSetup implements ISetup<RobotContainer> {
 
 
     @Override
-    public RobotContainer build(IHandle userBucketLib) {
+    public RobotContainer build(IProcessPath userBucketLib) {
 
 
 
@@ -58,7 +58,7 @@ public class RobotSetup implements ISetup<RobotContainer> {
                         )
                 )
 
-        ).build(userBucketLib.child("drive-subsystem"));
+        ).build(userBucketLib.addChild("drive-subsystem"));
 
         DriveInput input = new DriveInput(new Joystick(0));
 
