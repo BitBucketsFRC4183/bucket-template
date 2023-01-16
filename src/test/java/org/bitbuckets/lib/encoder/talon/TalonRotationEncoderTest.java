@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TalonRotationEncoderTest {
 
+    double steerReduction = (15.0 / 32.0) * (10.0 / 60.0);
+    double steerCoefficient = 2.0 * Math.PI / 2048 * steerReduction;
+
     @Test
     void zeroShouldReturnZero() {
 
@@ -19,15 +22,15 @@ class TalonRotationEncoderTest {
 
     @Test
     void getMechanismPositionAccumulated_radians() {
-
-        var steerReduction = (15.0 / 32.0) * (10.0 / 60.0);
-        var steerCoefficient = 2.0 * Math.PI / 2048 * steerReduction;
-
         TalonRotationEncoder rotationEncoder = new TalonRotationEncoder(DriveConstants.ROTATION_REDUCTION, () -> Math.toRadians(540) / steerCoefficient, () -> null);
 
         assertEquals(Math.toRadians(540), rotationEncoder.getMechanismPositionAccumulated_radians());
+    }
 
-        assertEquals(Math.toRadians(540) / steerCoefficient, 0);
+    @Test
+    void getMechanismPositionBounded_radians() {
+        TalonRotationEncoder rotationEncoder = new TalonRotationEncoder(DriveConstants.ROTATION_REDUCTION, () -> Math.toRadians(540) / steerCoefficient, () -> null);
 
+        assertEquals(Math.toRadians(180), rotationEncoder.getMechanismPositionBounded_radians());
     }
 }
