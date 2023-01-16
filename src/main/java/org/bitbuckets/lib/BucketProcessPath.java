@@ -43,5 +43,10 @@ public class BucketProcessPath implements IProcessPath {
         return selfLogFactory;
     }
 
+    @Override
+    public ErrorManager errorManager() {
+        return errorManager;
+    }
+
 
 }
