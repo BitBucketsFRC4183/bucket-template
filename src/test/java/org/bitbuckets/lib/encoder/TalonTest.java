@@ -2,17 +2,9 @@ package org.bitbuckets.lib.encoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.hal.HAL;
-import org.bitbuckets.drive.DriveConstants;
-import org.bitbuckets.lib.BucketLib;
 import org.bitbuckets.lib.CTREPhysicsSim;
-import org.bitbuckets.lib.encoder.talon.TalonRotationEncoder;
-import org.bitbuckets.lib.encoder.talon.TalonRotationSetup;
-import org.bitbuckets.lib.index.PIDIndex;
-import org.bitbuckets.lib.motor.talon.TalonClosedSetup;
-import org.bitbuckets.lib.motor.talon.TalonMotor;
 import org.junit.jupiter.api.*;
 
 public class TalonTest {

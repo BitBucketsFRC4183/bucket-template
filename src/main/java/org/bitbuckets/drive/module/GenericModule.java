@@ -34,7 +34,6 @@ public class GenericModule {
         double velocitySetpoint = velocitySetpoint_metersPerSecond;
 
 
-
         if (difference_radians >= Math.PI) {
             realSetpoint_radians -= 2.0 * Math.PI;
         } else if (difference_radians < -Math.PI) {
@@ -50,12 +49,17 @@ public class GenericModule {
 
         realSetpoint_radians = Angle.wrap(realSetpoint_radians);
 
+
         filteredSetpoint.log(realSetpoint_radians);
 
         //TODO i forgot to add the good setpoint
 
+        double a = realSetpoint_radians / wheelAxisEncoder.getMotorFactor();
+        double b = a / (2.0 * Math.PI);
+        double c = b * 2048.0;
+
         //OOP
         drive.moveAt(velocitySetpoint);
-        turn.moveAt(realSetpoint_radians); //TODO this is wrong
+        turn.moveAt(c); //TODO this is wrong
     }
 }

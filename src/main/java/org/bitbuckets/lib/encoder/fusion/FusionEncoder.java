@@ -13,33 +13,34 @@ public class FusionEncoder implements IRotationEncoder {
     final IRotationEncoder can; //we trust you the most (i don't know why you suck)
 
     int counter = 0;
+    boolean fired = false;
 
     public FusionEncoder(IRotationEncoder talon, IRotationEncoder can) {
         this.talon = talon;
         this.can = can;
     }
 
+    public double calculateAlignSU() {
+
+        double totalAccumPlusAngle_radians = talon.getMechanismPositionAccumulated_radians(); //0
+        double totalAngle = totalAccumPlusAngle_radians % (2.0 * Math.PI); //0
+        double taoPrewrap = totalAccumPlusAngle_radians - totalAngle;
+        double totalAccumOnly = Angle.wrap(taoPrewrap); //accumulated radians
+
+
+        //0 - 0
+        double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
+        double totalAccumPlusReal_radians = totalAccumOnly + actualAngle; //1.9
+        double adjusted = totalAccumPlusReal_radians / (Math.PI * 2) / talon.getMotorFactor() * 2048;
+
+        return adjusted;
+    }
+
     public void realign() {
 
+        talon.rawAccess(TalonFX.class).setSelectedSensorPosition(calculateAlignSU());
+
         counter++;
-
-        if (counter > 500) {
-            counter = 0;
-
-            //0 - 0
-            double actualAngle = can.getEncoderPositionBounded_radians(); //1.9
-            System.out.println("aa " + actualAngle);
-
-
-            System.out.println("prev");
-
-            //convert from accumulated + real radians back to the talon SU lmao
-            double adjusted = actualAngle / (Math.PI * 2) / DriveConstants.ROTATION_REDUCTION * 2048;
-            System.out.println("adju " + adjusted);
-
-            //TODO WARNING BLOCKING CODE HERE
-            talon.rawAccess(TalonFX.class).setSelectedSensorPosition(-adjusted);
-        }
 
     }
 
@@ -50,7 +51,7 @@ public class FusionEncoder implements IRotationEncoder {
 
     @Override
     public double getMotorFactor() {
-        throw new UnsupportedOperationException();
+        return talon.getMotorFactor();
     }
 
     @Override
@@ -77,7 +78,7 @@ public class FusionEncoder implements IRotationEncoder {
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return can.getMechanismPositionBounded_radians();
+        return talon.getMechanismPositionBounded_radians();
     }
 
     @Override

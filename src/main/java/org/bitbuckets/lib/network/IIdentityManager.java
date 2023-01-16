@@ -5,6 +5,9 @@ package org.bitbuckets.lib.network;
  */
 public interface IIdentityManager {
 
+
+    //Some/Smart/Dashboard/Thing
+
     /**
      * Acquires an identity key for a device with no dependencies
      * @param name

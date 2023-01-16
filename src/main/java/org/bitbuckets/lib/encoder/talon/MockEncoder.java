@@ -1,4 +1,4 @@
-package org.bitbuckets.lib.encoder.fusion;
+package org.bitbuckets.lib.encoder.talon;
 
 import org.bitbuckets.lib.encoder.Angle;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
@@ -10,10 +10,12 @@ public class MockEncoder implements IRotationEncoder {
 
     final double gearRatio;
     final Supplier<Double> raw;
+    final Supplier<Object> self;
 
-    public MockEncoder(double gearRatio, Supplier<Double> raw) {
+    public MockEncoder(double gearRatio, Supplier<Double> raw, Supplier<Object> self) {
         this.gearRatio = gearRatio;
         this.raw = raw;
+        this.self = self;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MockEncoder implements IRotationEncoder {
     @Override
     public double getEncoderPositionBounded_radians() {
         //su -> revs -> rads
-        return getEncoderPositionAccumulated_radians();
+        return Angle.wrap(getEncoderPositionAccumulated_radians());
     }
 
     @Override
@@ -49,7 +51,7 @@ public class MockEncoder implements IRotationEncoder {
 
     @Override
     public double getMechanismPositionBounded_radians() {
-        return getEncoderPositionBounded_radians() * gearRatio; //actually produces rads
+        return Angle.wrap(getEncoderPositionBounded_radians() * gearRatio); //actually produces rads
     }
 
     @Override
@@ -59,6 +61,6 @@ public class MockEncoder implements IRotationEncoder {
 
     @Override
     public <T> T rawAccess(Class<T> clazz) {
-        throw new UnsupportedOperationException();
+        return clazz.cast(self.get());
     }
 }
