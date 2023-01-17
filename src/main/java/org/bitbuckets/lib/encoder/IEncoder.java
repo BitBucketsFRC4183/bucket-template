@@ -1,12 +1,13 @@
 package org.bitbuckets.lib.encoder;
 
+import org.bitbuckets.lib.IRaw;
 import org.bitbuckets.lib.motor.BaseUnitType;
 
 /**
  * Represents an encoder that's on a motor controller
  * it's being read from the motor controller and not a DIO/analog port on the RIO
  */
-public interface IEncoder {
+public interface IEncoder extends IRaw {
 
     //transparency
 
@@ -14,11 +15,11 @@ public interface IEncoder {
     double getGeneralConversionFactor();
     BaseUnitType getBaseUnitType();
 
-    double getPosition_metersPerSecond();
-    double getPositionFactored();
-    double getPositionRaw();
+    double getPositionMechanism_meters();
+    double getPositionEncoder_meters();
 
-    double getVelocity_metersPerSecond();
-    double getVelocityFactored();
-    double getVelocityRaw();
+    double getVelocityMechanism_metersPerSecond();
+    double getVelocityEncoder_metersPerSecond();
+
+
 }

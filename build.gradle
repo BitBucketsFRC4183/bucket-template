@@ -39,7 +39,7 @@ def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
 wpi.java.debugJni = false
 
-def includeDesktopSupport = true
+
 
 repositories {
     maven {
@@ -79,7 +79,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.mockito:mockito-core:4.11.0'
 
-    annotationProcessor "org.littletonrobotics.akit.junction:junction-autolog:2.1.0"
+    annotationProcessor project("season-annotations")
 }
 
 test {
@@ -87,7 +87,8 @@ test {
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
 
-wpi.sim.addGui()
+def includeDesktopSupport = true
+wpi.sim.addGui().defaultEnabled = true
 wpi.sim.addDriverstation()
 
 jar {

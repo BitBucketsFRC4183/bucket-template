@@ -1,8 +1,11 @@
 package org.bitbuckets.lib;
 
-import org.bitbuckets.lib.network.ErrorManager;
 import org.bitbuckets.lib.network.ILogFactory;
 import org.bitbuckets.lib.network.ILoopManager;
+import org.bitbuckets.lib.logging.DiffableData;
+import org.bitbuckets.lib.logging.Receptor;
+
+import java.util.function.Supplier;
 
 /**
  * Represents a path in the process tree during setup
@@ -33,10 +36,25 @@ public interface IProcessPath {
      */
     ILogFactory logFactory();
 
-    ErrorManager errorManager();
 
-    interface ReportFactory {
-        //TODO fill it out
-    }
+    <T extends DiffableData<T>> Receptor<T> data(Supplier<T> dataInitializer);
+
+    /**
+     * Reports that something has gone really wrong while trying to start up the robot
+     * kills the robot.
+     * @param error
+     */
+    void reportSetupCriticalError(String error);
+
+    /**
+     * optionally can be called at the start of your setup method to record how long it takes to do a task
+     * @return a profiler id (not to be confused with ProcessPath id) that can be fed into {@link #endProfiling(int id)}
+     */
+    int beginProfiling(String taskName);
+
+    /**
+     * should be called at the end of whatever task your setup method had
+     */
+    void endProfiling(int profileTaskId);
 
 }

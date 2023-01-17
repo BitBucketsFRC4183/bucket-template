@@ -6,6 +6,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        RobotBase.startRobot(() -> new BootstrapRobot(null));
+        RobotBase.startRobot(() -> new Robot(null));
     }
 }

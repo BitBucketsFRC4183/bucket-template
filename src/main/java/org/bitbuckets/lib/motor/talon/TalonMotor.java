@@ -23,8 +23,7 @@ public class TalonMotor implements IMotor {
 
     double cachedUnits = 0.0;
 
-    @Override
-    public double cachedUnits() {
+    double cachedUnits() {
         return cachedUnits;
     }
 
@@ -36,14 +35,12 @@ public class TalonMotor implements IMotor {
     }
 
 
-    //ignore this reflection code because if everyone on the team is coding diligently
-    //we wont even need it!
     @Override
-    public <T> Optional<T> underlyingMotor(Class<T> typeOfMotor) {
-        if (typeOfMotor.equals(BaseTalon.class)) {
-            return Optional.of(typeOfMotor.cast(talon));
+    public <T> T rawAccess(Class<T> type) {
+        if (type.equals(BaseTalon.class)) {
+            return type.cast(talon);
         }
 
-        return Optional.empty();
+        throw new UnsupportedOperationException();
     }
 }

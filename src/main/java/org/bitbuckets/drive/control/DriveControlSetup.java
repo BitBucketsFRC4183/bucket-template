@@ -1,6 +1,6 @@
 package org.bitbuckets.drive.control;
 
-import org.bitbuckets.drive.module.GenericModule;
+import org.bitbuckets.drive.module.IModule;
 import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 
@@ -11,12 +11,12 @@ import org.bitbuckets.lib.ISetup;
  */
 public class DriveControlSetup implements ISetup<DriveControl> {
 
-    final ISetup<GenericModule> frontLeft;
-    final ISetup<GenericModule> frontRight;
-    final ISetup<GenericModule> backLeft;
-    final ISetup<GenericModule> backRight;
+    final ISetup<IModule> frontLeft;
+    final ISetup<IModule> frontRight;
+    final ISetup<IModule> backLeft;
+    final ISetup<IModule> backRight;
 
-    public DriveControlSetup(ISetup<GenericModule> frontLeft, ISetup<GenericModule> frontRight, ISetup<GenericModule> backLeft, ISetup<GenericModule> backRight) {
+    public DriveControlSetup(ISetup<IModule> frontLeft, ISetup<IModule> frontRight, ISetup<IModule> backLeft, ISetup<IModule> backRight) {
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.backLeft = backLeft;
@@ -25,15 +25,15 @@ public class DriveControlSetup implements ISetup<DriveControl> {
 
 
     @Override
-    public DriveControl build(IProcessPath userBucketLib) {
+    public DriveControl build(IProcessPath path) {
         DriveControl control = new DriveControl(
-                frontLeft.build(userBucketLib.addChild("swerve-module-fr")),
-                frontRight.build(userBucketLib.addChild("swerve-module-fl")),
-                backLeft.build(userBucketLib.addChild("swerve-module-br")),
-                backRight.build(userBucketLib.addChild("swerve-module-bl"))
+                frontLeft.build(path.addChild("swerve-module-fr")),
+                frontRight.build(path.addChild("swerve-module-fl")),
+                backLeft.build(path.addChild("swerve-module-br")),
+                backRight.build(path.addChild("swerve-module-bl"))
         );
 
-        userBucketLib.logFactory().periodicModuleLogger("ass", () -> control.cached);
+        path.logFactory().periodicModuleLogger("ass", () -> control.cachedSetpoint);
 
         return control;
     }

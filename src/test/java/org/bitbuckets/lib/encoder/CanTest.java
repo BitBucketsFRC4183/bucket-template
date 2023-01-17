@@ -7,6 +7,8 @@ import org.bitbuckets.lib.encoder.can.CANRotationSetup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.bitbuckets.lib.util.CTRETestUtil.waitForCTREUpdate;
+
 public class CanTest {
 
     @Test
@@ -37,13 +39,6 @@ public class CanTest {
         Assertions.assertEquals(Math.toRadians(360 - 250), rotationEncoder.getEncoderPositionAccumulated_radians(), 0.01);
     }
 
-    public static void waitForCTREUpdate() {
-        try {
-            com.ctre.phoenix.unmanaged.Unmanaged.feedEnable(500);
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 }

@@ -14,8 +14,8 @@ public class BucketLib {
 
     final List<Runnable> runnables = new ArrayList<>();
 
-    final ILoopManager loop = new LoopManagerImpl(runnables);
-    final IIdentityManager identity = new IdentityManagerImpl();
+    final ILoopManager loop = new LoopManager(runnables);
+    final IIdentityManager identity = new IdentityManager();
     final ErrorManager error = new ErrorManager(identity);
 
     public void setup() {
@@ -23,7 +23,7 @@ public class BucketLib {
     }
 
     public IProcessPath rootProcessPath() {
-        return new BucketProcessPath(0, identity, error, loop);
+        return new ProcessPath(0, identity, error, loop);
     }
 
 

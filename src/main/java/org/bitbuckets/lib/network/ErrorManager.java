@@ -14,7 +14,9 @@ public class ErrorManager {
         this.identityFactory = identityFactory;
     }
 
-    public void flagError(int process, String error) {
+    public void flagError(int process, String error)
+    {
+
         //TODO actually robust error handling that isn't dumb
 
         DriverStation.reportError(String.format("[BUCKET] process id [%s] failed with error [%s]", process, error), false);

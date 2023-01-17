@@ -9,7 +9,7 @@ import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.constants.LibConstants;
-import org.bitbuckets.lib.ctre.Talon;
+import org.bitbuckets.lib.util.TalonInitUtil;
 import org.bitbuckets.lib.motor.IMotor;
 
 public class TalonPercentSetup implements ISetup<IMotor> {
@@ -25,8 +25,8 @@ public class TalonPercentSetup implements ISetup<IMotor> {
     }
 
     @Override
-    public TalonMotor build(IProcessPath userBucketLib) {
-        TalonFX talon = Talon.init(id);
+    public TalonMotor build(IProcessPath path) {
+        TalonFX talon = TalonInitUtil.init(id);
         talon.configFactoryDefault();
         talon.configVoltageCompSaturation(12);
         talon.enableVoltageCompensation(true);

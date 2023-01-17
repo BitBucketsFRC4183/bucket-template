@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.hal.HAL;
 import org.bitbuckets.lib.CTREPhysicsSim;
+import org.bitbuckets.lib.util.CTRETestUtil;
 import org.junit.jupiter.api.*;
 
 public class TalonTest {
@@ -17,8 +18,6 @@ public class TalonTest {
         motor = new WPI_TalonFX(0);
         CTREPhysicsSim.getInstance().addFX(motor, .75, 5100, true);
     }
-
-
 
 
 
@@ -37,7 +36,7 @@ public class TalonTest {
 
         motor.set(ControlMode.Position, Math.toRadians(20));
 
-        CanTest.waitForCTREUpdate();
+        CTRETestUtil.waitForCTREUpdate();
 
 
         Assertions.assertEquals(Math.toRadians(20), motor.getSelectedSensorPosition() / 2048 * 2 * Math.PI);

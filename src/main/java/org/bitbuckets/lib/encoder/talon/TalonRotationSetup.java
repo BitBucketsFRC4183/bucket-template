@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.IProcessPath;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import org.bitbuckets.lib.ISetup;
-import org.bitbuckets.lib.ctre.Talon;
+import org.bitbuckets.lib.util.TalonInitUtil;
 import org.bitbuckets.lib.encoder.IRotationEncoder;
 
 public class TalonRotationSetup implements ISetup<IRotationEncoder> {
@@ -18,8 +18,8 @@ public class TalonRotationSetup implements ISetup<IRotationEncoder> {
     }
 
     @Override
-    public IRotationEncoder build(IProcessPath userBucketLib) {
-        TalonFX fx = Talon.init(id);
+    public IRotationEncoder build(IProcessPath path) {
+        TalonFX fx = TalonInitUtil.init(id);
 
         fx.setInverted(true);
         fx.configIntegratedSensorAbsoluteRange(AbsoluteSensorRange.Unsigned_0_to_360);
@@ -28,11 +28,11 @@ public class TalonRotationSetup implements ISetup<IRotationEncoder> {
 
         //TODO logging, other setup
 
-        userBucketLib.logFactory().periodicDoubleLogger("bound", encoder::getEncoderPositionBounded_radians);
-        userBucketLib.logFactory().periodicDoubleLogger("accum", encoder::getEncoderPositionAccumulated_radians);
-        userBucketLib.logFactory().periodicDoubleLogger("mechbound", encoder::getMechanismPositionBounded_radians);
-        userBucketLib.logFactory().periodicDoubleLogger("mechaccum", encoder::getMechanismPositionAccumulated_radians);
-        userBucketLib.logFactory().periodicDoubleLogger("raw",encoder::getPositionRaw);
+        path.logFactory().periodicDoubleLogger("bound", encoder::getEncoderPositionBounded_radians);
+        path.logFactory().periodicDoubleLogger("accum", encoder::getEncoderPositionAccumulated_radians);
+        path.logFactory().periodicDoubleLogger("mechbound", encoder::getMechanismPositionBounded_radians);
+        path.logFactory().periodicDoubleLogger("mechaccum", encoder::getMechanismPositionAccumulated_radians);
+        path.logFactory().periodicDoubleLogger("raw",encoder::getPositionRaw);
 
         return encoder;
     }

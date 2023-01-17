@@ -17,7 +17,7 @@ public interface DriveConstants {
     double SLOW_DRIVE_VELOCITY = MAX_DRIVE_VELOCITY * 0.75;
     double MAX_ANG_VELOCITY = MAX_DRIVE_VELOCITY / Math.hypot(RobotConstants.WIDTH, RobotConstants.BASE);
 
-    //TODO get rid of this shit
+    //TODO get rid of this
     SimpleMotorFeedforward FF = new SimpleMotorFeedforward(0.65292, 2.3053, 0.37626); //converts velocity to voltage
 
     SwerveModuleState[] LOCK = new SwerveModuleState[] {

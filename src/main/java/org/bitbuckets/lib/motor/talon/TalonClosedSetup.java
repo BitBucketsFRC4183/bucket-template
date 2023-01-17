@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.ISetup;
 import org.bitbuckets.lib.constants.LibConstants;
-import org.bitbuckets.lib.ctre.Talon;
+import org.bitbuckets.lib.util.TalonInitUtil;
 import org.bitbuckets.lib.index.PIDIndex;
 import org.bitbuckets.lib.motor.IMotor;
 
@@ -30,10 +30,10 @@ public class TalonClosedSetup implements ISetup<IMotor> {
     }
 
     @Override
-    public TalonMotor build(IProcessPath userBucketLib) {
+    public TalonMotor build(IProcessPath path) {
 
         //IMPORTANT: IMOTOR setup should happen BEFORE ENCODER setup if ENCODER is integrated!
-        TalonFX talon = Talon.init(id);
+        TalonFX talon = TalonInitUtil.init(id);
         talon.configFactoryDefault();
         talon.configVoltageCompSaturation(12);
         talon.enableVoltageCompensation(true);
@@ -51,8 +51,8 @@ public class TalonClosedSetup implements ISetup<IMotor> {
 
         TalonMotor motor  = new TalonMotor(talon, ControlMode.Position);
 
-        userBucketLib.logFactory().periodicDoubleLogger("setpoint", talon::getSelectedSensorPosition);
-        userBucketLib.logFactory().periodicDoubleLogger("cachedunits", motor::cachedUnits);
+        path.logFactory().periodicDoubleLogger("setpoint", talon::getSelectedSensorPosition);
+        path.logFactory().periodicDoubleLogger("cachedunits", motor::cachedUnits);
 
         talon.getSelectedSensorPosition();
         talon.getClosedLoopTarget();

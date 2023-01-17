@@ -16,9 +16,9 @@ public interface ISetup<T> {
      * function representing the setup of a piece of code that requires robot-initalized-specific devices
      *
      * make sure you call any child factory with tools.child() and NOT with this tools instance
-     * @param userBucketLib a variety of tools.
+     * @param path a variety of tools.
      * @return a fully initialized object
      */
-    T build(IProcessPath userBucketLib);
+    T build(IProcessPath path);
 
 }

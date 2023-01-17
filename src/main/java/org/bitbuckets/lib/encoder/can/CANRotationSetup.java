@@ -18,7 +18,7 @@ public class CANRotationSetup implements ISetup<IRotationEncoder> {
     }
 
     @Override
-    public CANRotationEncoder build(IProcessPath userBucketLib) {
+    public CANRotationEncoder build(IProcessPath path) {
 
         WPI_CANCoder encoder = new WPI_CANCoder(canCoderId);
 
@@ -30,7 +30,7 @@ public class CANRotationSetup implements ISetup<IRotationEncoder> {
 
         CANRotationEncoder rot = new CANRotationEncoder(offset_degrees, encoderToMechanismRatio_revs, encoder);
 
-        userBucketLib.logFactory().periodicDoubleLogger("rads", rot::getEncoderPositionBounded_radians);
+        path.logFactory().periodicDoubleLogger("rads", rot::getEncoderPositionBounded_radians);
 
         return rot;
     }

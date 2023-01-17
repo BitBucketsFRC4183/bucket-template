@@ -1,12 +1,13 @@
 package org.bitbuckets.lib.encoder;
 
+import org.bitbuckets.lib.IRaw;
 import org.bitbuckets.lib.motor.BaseUnitType;
 
 /**
  * TODO NONE OF THE ANGLES ARE BOUND TO 2PI.
  * Do it yourself if you need to
  */
-public interface IRotationEncoder {
+public interface IRotationEncoder extends IRaw {
 
     //transparency
 
@@ -21,8 +22,6 @@ public interface IRotationEncoder {
     double getMechanismPositionBounded_radians();
 
     double getPositionRaw();
-
-    <T> T rawAccess(Class<T> clazz);
 
 
 }
