@@ -21,6 +21,13 @@ public class DriveControl implements IDriveControl {
 
     SwerveModuleState[] cachedSetpoint = DriveConstants.LOCK;
 
+    void guaranteedLoggingLoop() {
+        logger.process(data -> {
+            data.targetStates = reportSetpointStates();
+            data.realStates = reportActualStates();
+        });
+    }
+
     @Override
     public SwerveModuleState[] reportSetpointStates() {
         return cachedSetpoint;

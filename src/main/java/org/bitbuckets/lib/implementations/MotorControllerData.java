@@ -5,6 +5,7 @@ import org.bitbuckets.lib.logging.Loggable;
 @Loggable
 public class MotorControllerData {
 
+
     double currentSetpoint = 0.0;
 
     double encoderReadoutRaw = 0.0;

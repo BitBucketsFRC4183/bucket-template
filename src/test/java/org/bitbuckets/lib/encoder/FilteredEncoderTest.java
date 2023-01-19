@@ -1,13 +1,7 @@
 package org.bitbuckets.lib.encoder;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.hal.HAL;
 import org.bitbuckets.drive.module.FilteredEncoder;
 import org.bitbuckets.lib.abstractions.IEncoder;
-import org.bitbuckets.lib.abstractions.log.IDataLogger;
-import org.bitbuckets.lib.implementations.MotorController;
-import org.bitbuckets.lib.util.CTRETestUtil;
-import org.bitbuckets.lib.vendor.ctre.TalonPercentSetup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,7 +14,7 @@ class FilteredEncoderTest {
     void calculateOptimalSetpointRadiansForward() {
         IEncoder encoder = Mockito.mock(IEncoder.class);
         Mockito.when(encoder.getMechanismFactor()).thenReturn(1.0);
-        Mockito.when(encoder.getMechanismPositionAccumulated_radians()).thenReturn(Math.PI * 2.0);
+        Mockito.when(encoder.getEncoderPositionAccumulated_radians()).thenReturn(Math.PI * 2.0);
 
         FilteredEncoder filteredEncoder = new FilteredEncoder(encoder);
         double setpoint = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(0.5 * Math.PI);
@@ -33,7 +27,7 @@ class FilteredEncoderTest {
     void calculateOptimalSetpointRadiansBackwards() {
         IEncoder encoder = Mockito.mock(IEncoder.class);
         Mockito.when(encoder.getMechanismFactor()).thenReturn(1.0);
-        Mockito.when(encoder.getMechanismPositionAccumulated_radians()).thenReturn(Math.PI * 4.0);
+        Mockito.when(encoder.getEncoderPositionAccumulated_radians()).thenReturn(Math.PI * 4.0);
 
         FilteredEncoder filteredEncoder = new FilteredEncoder(encoder);
         double setpoint = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(1.5 * Math.PI);
@@ -47,12 +41,14 @@ class FilteredEncoderTest {
     void calculateOptimalSetpoint_shouldBeIntelligent() {
         IEncoder encoder = Mockito.mock(IEncoder.class);
         Mockito.when(encoder.getMechanismFactor()).thenReturn(0.5);
-        Mockito.when(encoder.getMechanismPositionAccumulated_radians()).thenReturn(Math.PI * 4.0);
+        Mockito.when(encoder.getEncoderPositionAccumulated_radians()).thenReturn(Math.PI * 4.0);
 
         FilteredEncoder filteredEncoder = new FilteredEncoder(encoder);
 
         double setpointMechrads = 0.5 * Math.PI; //why does this fix the code?? im so confused
         double setpoint = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(setpointMechrads);
+
+
         Assertions.assertEquals(5.0 * Math.PI, setpoint, 0.0001);
         //if we are at 2pi axis, we want to move 0.5pi axis, and 1pi encoder translates to 0.5 axis, the most optimal move
         //is to move to 3pi OR 5pi encoder minimizing rotations. In this case it goes to 5pi because it prioritizese increasing
@@ -65,7 +61,7 @@ class FilteredEncoderTest {
     void calculateOptimalSetpoint_shouldGoBackwards() {
         IEncoder encoder = Mockito.mock(IEncoder.class);
         Mockito.when(encoder.getMechanismFactor()).thenReturn(0.5);
-        Mockito.when(encoder.getMechanismPositionAccumulated_radians()).thenReturn(Math.PI * 0.25);
+        Mockito.when(encoder.getEncoderPositionAccumulated_radians()).thenReturn(Math.PI * 0.25);
 
         FilteredEncoder filteredEncoder = new FilteredEncoder(encoder);
 

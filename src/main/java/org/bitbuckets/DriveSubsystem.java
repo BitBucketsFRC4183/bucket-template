@@ -26,7 +26,9 @@ public class DriveSubsystem {
 
         SwerveModuleState[] states = RobotConstants.KINEMATICS.toSwerveModuleStates(desired);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.MAX_DRIVE_VELOCITY);
+        //TODO optimize states FURTHER (-90 degrees + negative velocity, shouldn't conflict)
 
+        control.doDriveWithStates(states);
     }
 
 }
