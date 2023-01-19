@@ -8,7 +8,7 @@ public class IdentityManagerTest {
 
     @Test
     public void shouldHaveRoot() {
-        IIdentityManager manager = Mockito.mock(IIdentityManager.class);
+        IIdentityManager manager = new IdentityManager(); //why was this mocked lmao
 
         Assertions.assertEquals("root/", manager.fullPath(0));
     }

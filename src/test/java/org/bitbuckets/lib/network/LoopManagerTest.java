@@ -1,5 +1,6 @@
 package org.bitbuckets.lib.network;
 
+import org.bitbuckets.lib.abstractions.IExecutable;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ public class LoopManagerTest {
         AtomicBoolean flag1 = new AtomicBoolean(false);
         AtomicBoolean flag2 = new AtomicBoolean(false);
 
-        List<Runnable> runnables = new ArrayList<>();
+        List<IExecutable> runnables = new ArrayList<>();
 
         runnables.add(() -> flag1.set(true));
-        ILoopManager manager = new LoopManager(runnables);
+        LoopManager manager = new LoopManager(runnables);
         manager.registerLoop(() -> flag2.set(true));
 
         //TODO fix

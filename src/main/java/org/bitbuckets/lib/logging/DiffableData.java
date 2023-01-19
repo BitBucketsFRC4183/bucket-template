@@ -1,9 +1,8 @@
 package org.bitbuckets.lib.logging;
 
-import org.bitbuckets.lib.Incubating;
+import org.bitbuckets.lib.abstractions.core.ILogDriver;
 
 //this is implemented by my annotation generator which will dynamically figure out what to do
-@Incubating
 public interface DiffableData<T extends DiffableData<T>> extends Cloneable {
 
     /**

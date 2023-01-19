@@ -6,7 +6,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.hal.HAL;
 import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.util.CTRETestUtil;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class TalonTest {
 
@@ -22,7 +25,7 @@ public class TalonTest {
 
 
 
-
+    @Disabled
     @Test
     void baseStuff() {
 

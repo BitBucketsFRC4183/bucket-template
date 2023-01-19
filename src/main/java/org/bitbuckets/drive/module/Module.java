@@ -3,31 +3,31 @@ package org.bitbuckets.drive.module;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import org.bitbuckets.lib.encoder.IEncoder;
-import org.bitbuckets.lib.motor.IMotor;
-import org.bitbuckets.lib.logging.Receptor;
+import org.bitbuckets.lib.abstractions.IEncoder;
+import org.bitbuckets.lib.abstractions.IMotor;
+import org.bitbuckets.lib.abstractions.log.IDataLogger;
 
 public class Module implements IModule {
 
     final IMotor drive;
     final IMotor turn;
     final IEncoder driveEncoder;
-    final EncoderAngleScope encoderAngleScope;
+    final FilteredEncoder filteredEncoder;
 
-    final Receptor<ModuleData> logger;
+    final IDataLogger<ModuleData> logger;
 
-    public Module(IMotor drive, IMotor turn, IEncoder driveEncoder, EncoderAngleScope encoderAngleScope, Receptor<ModuleData> logger) {
+    public Module(IMotor drive, IMotor turn, IEncoder driveEncoder, FilteredEncoder filteredEncoder, IDataLogger<ModuleData> logger) {
         this.drive = drive;
         this.turn = turn;
         this.driveEncoder = driveEncoder;
-        this.encoderAngleScope = encoderAngleScope;
+        this.filteredEncoder = filteredEncoder;
         this.logger = logger;
     }
 
     @Override
     public SwerveModuleState reportState() {
         double velocity_metersPerSecond = driveEncoder.getVelocityMechanism_metersPerSecond();
-        double rotation_radians = encoderAngleScope.relative.getMechanismPositionBounded_radians();
+        double rotation_radians = filteredEncoder.relative.getMechanismPositionBounded_radians();
 
         return new SwerveModuleState(velocity_metersPerSecond, Rotation2d.fromRadians(rotation_radians));
     }
@@ -35,7 +35,7 @@ public class Module implements IModule {
     @Override
     public SwerveModulePosition reportPosition() {
         double position_meters = driveEncoder.getPositionMechanism_meters();
-        double rotation_radians = encoderAngleScope.relative.getMechanismPositionBounded_radians();
+        double rotation_radians = filteredEncoder.relative.getMechanismPositionBounded_radians();
 
         return new SwerveModulePosition(position_meters, Rotation2d.fromRadians(rotation_radians));
     }
@@ -44,7 +44,7 @@ public class Module implements IModule {
     public void commandSetpointValues(double velocitySetpoint_metersPerSecond, double turnSetpoint_radians) {
 
 
-        double optimizedMechanismRads = encoderAngleScope.optimizeSetpointWithMechanismRads_encoderRads(turnSetpoint_radians);
+        double optimizedMechanismRads = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(turnSetpoint_radians);
         double optimizedMechanismSU = optimizedMechanismRads / Math.PI / 2.0 * 2048.0; //TODO test if this is safe
 
         drive.moveAt(velocitySetpoint_metersPerSecond);

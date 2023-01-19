@@ -2,7 +2,6 @@ package org.bitbuckets;
 
 import com.squareup.javapoet.*;
 
-
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
@@ -27,7 +26,7 @@ public class BucketAnnotationProcessor extends AbstractProcessor {
     }
 
     static final TypeName DIFF_DATA_TYPE = ClassName.get("org.bitbuckets.lib.logging", "DiffableData");
-    static final TypeName LOG_DRIVER_TYPE = ClassName.get("org.bitbuckets.lib.logging", "ILogDriver");
+    static final TypeName LOG_DRIVER_TYPE = ClassName.get("org.bitbuckets.lib.abstractions.core", "ILogDriver");
 
     private static final Map<String, String> LOGGABLE_TYPES_LOOKUP = new HashMap<>();
     private static final Map<String, String> UNLOGGABLE_TYPES_SUGGESTIONS = new HashMap<>();

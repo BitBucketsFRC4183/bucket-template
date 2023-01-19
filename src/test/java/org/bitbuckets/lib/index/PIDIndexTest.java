@@ -1,9 +1,8 @@
 package org.bitbuckets.lib.index;
 
+import org.bitbuckets.lib.PIDIndex;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PIDIndexTest {
 

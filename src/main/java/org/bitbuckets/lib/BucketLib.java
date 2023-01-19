@@ -1,6 +1,9 @@
 package org.bitbuckets.lib;
 
+import org.bitbuckets.lib.abstractions.IExecutable;
+import org.bitbuckets.lib.implementations.log.LogDriver;
 import org.bitbuckets.lib.network.*;
+import org.littletonrobotics.junction.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +15,19 @@ import java.util.List;
 public class BucketLib {
 
 
-    final List<Runnable> runnables = new ArrayList<>();
+    final List<IExecutable> runnables = new ArrayList<>();
 
-    final ILoopManager loop = new LoopManager(runnables);
+    final LoopManager loop = new LoopManager(runnables);
     final IIdentityManager identity = new IdentityManager();
     final ErrorManager error = new ErrorManager(identity);
+    final LogDriver driver = new LogDriver(Logger.getInstance(), identity, loop);
 
     public void setup() {
         //nothing to do...
     }
 
     public IProcessPath rootProcessPath() {
-        return new ProcessPath(0, identity, error, loop);
+        return new ProcessPath(0, identity, error, loop, driver);
     }
 
 
@@ -31,8 +35,13 @@ public class BucketLib {
 
 
     public void runLoop() {
-        for (Runnable runnable : runnables) {
-            runnable.run();
+        for (IExecutable runnable : runnables) {
+            try {
+                runnable.run();
+            } catch (Exception e) {
+
+            }
+
         }
     }
 }

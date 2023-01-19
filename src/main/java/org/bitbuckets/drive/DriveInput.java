@@ -3,7 +3,7 @@ package org.bitbuckets.drive;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
-import org.bitbuckets.lib.constants.XboxConstants;
+import org.bitbuckets.robot.XboxConstants;
 
 //TODO logging, factory
 public class DriveInput {

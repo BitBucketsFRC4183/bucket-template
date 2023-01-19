@@ -1,7 +1,6 @@
 package org.bitbuckets.lib;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import static org.bitbuckets.lib.CTREPhysicsSim.random;
 

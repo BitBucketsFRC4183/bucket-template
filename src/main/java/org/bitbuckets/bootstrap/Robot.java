@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import org.bitbuckets.lib.BucketLib;
 import org.bitbuckets.lib.CTREPhysicsSim;
 import org.bitbuckets.lib.IRobotContainer;
-import org.bitbuckets.lib.ISetup;
+import org.bitbuckets.lib.abstractions.ISetup;
 import org.bitbuckets.robot.RobotContainer;
 import org.bitbuckets.robot.RobotSetup;
 import org.littletonrobotics.junction.LoggedRobot;
@@ -75,6 +75,8 @@ public class Robot extends LoggedRobot {
 
         libHandle.runLoop();
         robotHandle.teleopPeriodic();
+
+        //TODO command scheduler should run here
     }
 
     @Override

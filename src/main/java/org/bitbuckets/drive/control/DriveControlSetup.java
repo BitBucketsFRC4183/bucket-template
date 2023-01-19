@@ -2,7 +2,8 @@ package org.bitbuckets.drive.control;
 
 import org.bitbuckets.drive.module.IModule;
 import org.bitbuckets.lib.IProcessPath;
-import org.bitbuckets.lib.ISetup;
+import org.bitbuckets.lib.abstractions.ISetup;
+import org.bitbuckets.lib.abstractions.log.IDataLogger;
 
 /**
  * Sets up prereqs for a drive controller
@@ -26,15 +27,15 @@ public class DriveControlSetup implements ISetup<DriveControl> {
 
     @Override
     public DriveControl build(IProcessPath path) {
-        DriveControl control = new DriveControl(
+        IDataLogger<DriveControlDataAutoGen> logger = path.generatePushDataLogger(DriveControlDataAutoGen::new);
+
+
+        return new DriveControl(
+                logger,
                 frontLeft.build(path.addChild("swerve-module-fr")),
                 frontRight.build(path.addChild("swerve-module-fl")),
                 backLeft.build(path.addChild("swerve-module-br")),
                 backRight.build(path.addChild("swerve-module-bl"))
         );
-
-        path.logFactory().periodicModuleLogger("ass", () -> control.cachedSetpoint);
-
-        return control;
     }
 }
