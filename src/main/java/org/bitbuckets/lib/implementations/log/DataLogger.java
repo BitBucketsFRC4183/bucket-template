@@ -22,13 +22,11 @@ public class DataLogger<T extends DiffableData<T>> implements IDataLogger<T> {
 
     @Override
     public void process(Consumer<T> dataProcessor) {
-        System.out.println("A");
 
-        Logger.getInstance().recordOutput("testingvalue",20.0);
+        Logger.getInstance().recordOutput("testingvalue", 20.0);
 
         cachedData.startDiff();
 
-        System.out.println(cachedData);
         dataProcessor.accept(cachedData);
         cachedData.completeDiff(parentId, driver);
     }

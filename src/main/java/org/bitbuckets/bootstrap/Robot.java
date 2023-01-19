@@ -27,7 +27,7 @@ public class Robot extends LoggedRobot {
 
 
     BucketLib libHandle;
-    RobotContainer robotHandle;
+    RobotContainer robotContainer;
 
     @Override
     public void robotInit() {
@@ -58,7 +58,7 @@ public class Robot extends LoggedRobot {
         BucketLib lib = new BucketLib();
         RobotSetup setup = new RobotSetup();
 
-        robotHandle = setup.build(lib.rootProcessPath());
+        robotContainer = setup.build(lib.rootProcessPath());
         //TODO RobotSetup here, set to a Robot instance, etc
 
         libHandle = lib;
@@ -74,9 +74,13 @@ public class Robot extends LoggedRobot {
         //TODO run all logging loops here always
 
         libHandle.runLoop();
-        robotHandle.teleopPeriodic();
 
         //TODO command scheduler should run here
+    }
+
+    @Override
+    public void teleopPeriodic() {
+        robotContainer.teleopPeriodic();
     }
 
     @Override

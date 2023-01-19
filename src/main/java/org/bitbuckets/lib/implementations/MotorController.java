@@ -34,10 +34,8 @@ public class MotorController implements IMotorController {
 
     public void guaranteedLoggingLoop() {
 
-        System.out.println("I EAT  ");
         logger.process(data -> {
             data.currentSetpoint = motorDelegate.getSetpoint();
-            System.out.println("LOL");
             data.encoderReadoutRaw = lowLevelEncoder.getRawPosition_baseUnits();
             data.encoderPositionBounded = getEncoderPositionBounded_radians();
             data.encoderPositionAccumulated = getEncoderPositionAccumulated_radians();
@@ -108,7 +106,7 @@ public class MotorController implements IMotorController {
 
     @Override
     public double getVelocityEncoder_metersPerSecond() {
-        return lowLevelEncoder.getRawVelocity_baseUnitsBaseTime() * baseTimeToSecondsFactor * rawUnitsToRotationsFactor *rotationsToMetersFactor;
+        return lowLevelEncoder.getRawVelocity_baseUnitsBaseTime() * baseTimeToSecondsFactor * rawUnitsToRotationsFactor * rotationsToMetersFactor;
     }
 
     @Override

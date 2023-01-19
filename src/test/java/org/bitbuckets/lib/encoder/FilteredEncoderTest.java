@@ -24,6 +24,20 @@ class FilteredEncoderTest {
     }
 
     @Test
+    void calculateOptimalSetpointRadiansForwardOverShoot() {
+        IEncoder encoder = Mockito.mock(IEncoder.class);
+        Mockito.when(encoder.getMechanismFactor()).thenReturn(1.0);
+        Mockito.when(encoder.getEncoderPositionAccumulated_radians()).thenReturn(Math.PI * 2.0);
+
+        FilteredEncoder filteredEncoder = new FilteredEncoder(encoder);
+        double setpoint = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(20 * Math.PI);
+
+        Assertions.assertEquals(Math.PI * 2, setpoint, .1);
+
+    }
+
+
+    @Test
     void calculateOptimalSetpointRadiansBackwards() {
         IEncoder encoder = Mockito.mock(IEncoder.class);
         Mockito.when(encoder.getMechanismFactor()).thenReturn(1.0);
