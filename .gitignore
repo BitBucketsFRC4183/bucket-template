@@ -7,3 +7,4 @@ simgui-ds.json
 simgui.json
 simgui-window.json
 /analysis/
+*.log
