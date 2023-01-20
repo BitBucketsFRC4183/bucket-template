@@ -1,5 +1,6 @@
 package org.bitbuckets.drive.control;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import org.bitbuckets.drive.module.IModule;
 import org.bitbuckets.lib.IProcessPath;
 import org.bitbuckets.lib.abstractions.ISetup;
@@ -28,14 +29,17 @@ public class DriveControlSetup implements ISetup<DriveControl> {
     @Override
     public DriveControl build(IProcessPath path) {
         IDataLogger<DriveControlDataAutoGen> logger = path.generatePushDataLogger(DriveControlDataAutoGen::new);
-
-
-        return new DriveControl(
+        DriveControl control = new DriveControl(
                 logger,
                 frontLeft.build(path.addChild("swerve-module-fr")),
                 frontRight.build(path.addChild("swerve-module-fl")),
                 backLeft.build(path.addChild("swerve-module-br")),
                 backRight.build(path.addChild("swerve-module-bl"))
         );
+
+
+        path.registerLoop(control::guaranteedLoggingLoop);
+
+        return control;
     }
 }

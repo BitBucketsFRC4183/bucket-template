@@ -5,6 +5,7 @@ import org.bitbuckets.lib.implementations.log.LogDriver;
 import org.bitbuckets.lib.network.*;
 import org.littletonrobotics.junction.Logger;
 
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class BucketLib {
             try {
                 runnable.run();
             } catch (Exception e) {
-
+                throw new RuntimeException(e);
             }
 
         }

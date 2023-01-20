@@ -3,6 +3,7 @@ package org.bitbuckets.lib.implementations.log;
 import org.bitbuckets.lib.abstractions.core.ILogDriver;
 import org.bitbuckets.lib.abstractions.log.IDataLogger;
 import org.bitbuckets.lib.logging.DiffableData;
+import org.littletonrobotics.junction.Logger;
 
 import java.util.function.Consumer;
 
@@ -21,7 +22,11 @@ public class DataLogger<T extends DiffableData<T>> implements IDataLogger<T> {
 
     @Override
     public void process(Consumer<T> dataProcessor) {
+
+        Logger.getInstance().recordOutput("testingvalue", 20.0);
+
         cachedData.startDiff();
+
         dataProcessor.accept(cachedData);
         cachedData.completeDiff(parentId, driver);
     }

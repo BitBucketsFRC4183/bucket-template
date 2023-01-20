@@ -48,7 +48,7 @@ public class FilteredEncoder {
     }
 
     public double optimizeSetpoint_encoderRads(double setpoint_encoderRads) {
-        double accumulated = relative.getMechanismPositionAccumulated_radians();
+        double accumulated = relative.getEncoderPositionAccumulated_radians();
 
         return optimizeWithBoth(setpoint_encoderRads, accumulated);
     }

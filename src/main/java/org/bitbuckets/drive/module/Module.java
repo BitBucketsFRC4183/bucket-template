@@ -42,11 +42,10 @@ public class Module implements IModule {
 
     @Override
     public void commandSetpointValues(double velocitySetpoint_metersPerSecond, double turnSetpoint_radians) {
-
-
         double optimizedMechanismRads = filteredEncoder.optimizeSetpointWithMechanismRads_encoderRads(turnSetpoint_radians);
         double optimizedMechanismSU = optimizedMechanismRads / Math.PI / 2.0 * 2048.0; //TODO test if this is safe
 
+        // TODO: change moveAt to moveAtVelocity, moveAtPercentOutput, moveToPosition to make it more clear?
         drive.moveAt(velocitySetpoint_metersPerSecond);
         turn.moveAt(optimizedMechanismSU);
 

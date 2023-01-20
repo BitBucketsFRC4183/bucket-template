@@ -43,6 +43,7 @@ public class BucketAnnotationProcessor extends AbstractProcessor {
         LOGGABLE_TYPES_LOOKUP.put("float[]", "FloatArray");
         LOGGABLE_TYPES_LOOKUP.put("double[]", "DoubleArray");
         LOGGABLE_TYPES_LOOKUP.put("java.lang.String[]", "StringArray");
+        LOGGABLE_TYPES_LOOKUP.put("edu.wpi.first.math.kinematics.SwerveModuleState[]", "SwerveModuleState[]");
 
         UNLOGGABLE_TYPES_SUGGESTIONS.put("java.lang.Byte[]", "byte[]");
         UNLOGGABLE_TYPES_SUGGESTIONS.put("java.lang.Boolean", "boolean");
@@ -132,9 +133,9 @@ public class BucketAnnotationProcessor extends AbstractProcessor {
                     startDiff.addCode("this.$L = $L;\n", lastName, simpleName);
 
                     builder1
-                            .beginControlFlow("if (this.$L != $L)", lastName, simpleName)
-                            .add("driver.report($L, $S, $L);", "id", simpleName, simpleName)
-                            .endControlFlow();
+                            //.beginControlFlow("if (this.$L != $L)", lastName, simpleName)
+                            .add("driver.report($L, $S, $L);", "id", simpleName, simpleName);
+                            //.endControlFlow();
 
                 }
 

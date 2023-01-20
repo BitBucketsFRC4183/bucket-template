@@ -11,6 +11,8 @@ public class LogFactoryTest {
     @BeforeAll
     public static void nt() {
         assert HAL.initialize(500, 0);
+
+        //TODO please fix things
     }
 
 
