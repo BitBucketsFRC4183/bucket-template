@@ -2,6 +2,7 @@
 /.gradle/
 # Project exclude paths
 /build/
+/season-annotations/build/
 /src/main/java/org/bitbuckets/bootstrap/BuildConstants.java
 simgui-ds.json
 simgui.json
